@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using PleaseDownload.Configuration;
+
+namespace PleaseDownload.Helpers
+{
+    public static class IoHelper
+    {
+        private static string GetFileContent(string settingsFileLocation)
+        {
+            return File.ReadAllText(settingsFileLocation);
+        }
+
+        public static IEnumerable<string> ReadAllLines(string file)
+        {
+            return File.ReadAllLines(file);
+        }
+
+        public static string GetFileName(string path)
+        {
+            return Path.GetFileName(path);
+        }
+
+        public static bool FileExists(string filePath)
+        {
+            return File.Exists(filePath);
+        }
+
+        public static void RemoveLinkFromTheList(string path)
+        {
+            var linksList = File.ReadAllLines(path).ToList();
+            linksList.RemoveAt(0);
+            File.WriteAllLines(path, linksList.ToArray());
+        }
+
+        public static bool StartDownload(string url, string downloadFolder)
+        {
+            try
+            {
+                NetworkHelper.DownloadFile(url, downloadFolder);
+                return true;
+            }
+            catch (Exception)
+            {
+                PrepareEnvironment(new Settings(false));
+                return false;
+            }
+        }
+
+        public static string CreatePath(string url, string downloadFolder)
+        {
+            var filename = Path.GetFileName(url);
+            var newPath = Path.Combine(downloadFolder, filename);
+            return newPath;
+        }
+
+        public static void PrepareEnvironment(Settings settings)
+        {
+            try
+            {
+                if (!FileExists(settings.DownloadList)) File.CreateText(settings.DownloadList);
+                if (!FileExists(settings.SettingsFileLocation))
+                {
+                    var jsonOptions = new JsonSerializerOptions {WriteIndented = true};
+                    File.CreateText(settings.SettingsFileLocation);
+                    File.WriteAllText(settings.SettingsFileLocation, JsonSerializer.Serialize(settings, jsonOptions));
+                }
+
+                if (!Directory.Exists(settings.DownloadLocation)) Directory.CreateDirectory(settings.DownloadLocation);
+            }
+            catch (Exception)
+            {
+                Messages.ShowMessage(Messages.ErrorInitiatingConfiguration);
+            }
+        }
+
+        public static T Deserialize<T>(string settingsFileLocation)
+        {
+            var json = GetFileContent(settingsFileLocation);
+            return JsonSerializer.Deserialize<T>(json);
+        }
+    }
+}

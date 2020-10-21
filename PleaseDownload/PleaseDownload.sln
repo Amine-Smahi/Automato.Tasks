@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PleaseDownload", "src\PleaseDownload.csproj", "{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Debug|x64.Build.0 = Debug|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Debug|x86.Build.0 = Debug|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Release|x64.ActiveCfg = Release|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Release|x64.Build.0 = Release|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{A715FEC1-DF5B-44DB-B54A-21E7315DE6EB}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
