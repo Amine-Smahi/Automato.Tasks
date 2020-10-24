@@ -29,7 +29,7 @@ namespace PleaseDownload.Helpers
             return File.Exists(filePath);
         }
 
-        public static void RemoveLinkFromTheList(string path)
+        public static void RemoveTaskFromTheList(string path)
         {
             var linksList = File.ReadAllLines(path).ToList();
             linksList.RemoveAt(0);
@@ -61,7 +61,7 @@ namespace PleaseDownload.Helpers
         {
             try
             {
-                if (!FileExists(settings.DownloadList)) File.CreateText(settings.DownloadList);
+                if (!FileExists(settings.TasksLocation)) File.CreateText(settings.TasksLocation);
                 if (!FileExists(settings.SettingsFileLocation))
                 {
                     var jsonOptions = new JsonSerializerOptions {WriteIndented = true};

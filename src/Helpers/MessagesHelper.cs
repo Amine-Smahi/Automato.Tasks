@@ -22,9 +22,9 @@ namespace PleaseDownload.Helpers
             return $"Waiting for a better internet connexion speed........({speed} Kb/s)";
         }
 
-        public static string Welcome(in int filesCount, string settingsDownloadList)
+        public static string Welcome(in int tasksCount, string tasksLocation)
         {
-            return $"Found ({filesCount}) files in {settingsDownloadList}, Lets Go!\n";
+            return $"Found ({tasksCount}) tasks in {tasksLocation}, Lets Go!\n";
         }
 
         public static string SuccessfulDownload(string fileName)

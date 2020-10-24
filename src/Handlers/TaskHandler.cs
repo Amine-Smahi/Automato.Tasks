@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using PleaseDownload.Configuration;
 using PleaseDownload.Enums;
@@ -9,27 +10,38 @@ namespace PleaseDownload.Handlers
     {
         private static readonly Settings Settings = new Settings(true);
 
-        public static void InitiateDownloads()
+        public static void ExecuteTasks()
         {
-            var files = IoHelper.ReadAllLines(Settings.DownloadList).ToList();
-            if (files.Count <= 0) return;
-            Messages.ShowMessage(Messages.Welcome(files.Count, Settings.DownloadList));
-            foreach (var file in files) ProcessTask(TaskType.DownloadFile, file);
+            var tasks = IoHelper.ReadAllLines(Settings.TasksLocation).ToList();
+            if (tasks.Count <= 0) return;
+            Messages.ShowMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
+            foreach (var task in tasks) ProcessTask(task);
         }
 
-        private static void ProcessTask(TaskType type, string url)
+        private static void ProcessTask(string task)
         {
             while (true)
             {
                 NetworkHelper.WaitForDecentInternetConnection(Settings.MinimumInternetSpeed,
                     Settings.MinimumGoodPings,
                     Settings.MinimumGoodPings);
-                if (type.ToString().Equals(TaskType.DownloadFile.ToString()))
-                    if (DownloadFileHandler(url))
-                        continue;
 
+                if (task.Contains(TaskType.Download.ToString()))
+                {
+                    if (DownloadFileHandler(RemoveTaskType(task,TaskType.Download)))
+                        continue;
+                }
+                else
+                {
+                    SystemHelper.ExecuteCommand(RemoveTaskType(task, TaskType.Cmd));
+                }
                 break;
             }
+        }
+
+        private static string RemoveTaskType(string task, TaskType type)
+        {
+            return task.Replace(type + " ", string.Empty);
         }
 
         private static bool DownloadFileHandler(string url)
@@ -38,7 +50,7 @@ namespace PleaseDownload.Handlers
             if (doesSucceed)
             {
                 Messages.ShowMessage(Messages.SuccessfulDownload(IoHelper.GetFileName(url)));
-                IoHelper.RemoveLinkFromTheList(Settings.DownloadList);
+                IoHelper.RemoveTaskFromTheList(Settings.TasksLocation);
             }
             else
             {

@@ -7,7 +7,7 @@ namespace PleaseDownload
     {
         private static void Main(string[] args)
         {
-            TaskHandler.InitiateDownloads();
+            TaskHandler.ExecuteTasks();
             SystemHelper.Finish(args);
         }
     }

@@ -27,6 +27,21 @@ namespace PleaseDownload.Helpers
             MakeItSleepIfTrue(args);
         }
 
+        public static void ExecuteCommand(string command)
+        {
+            var process = new Process();
+            
+            if (IsLinux())
+                process.StartInfo = ExecuteCommandForLinux(command);
+            else if (IsWindows())
+                process.StartInfo = SuspendForWindows();
+            else if (IsMac())
+                process.StartInfo = SuspendForMac();
+            else
+                Messages.ShowMessage(Messages.OsNotDetected);
+            process.Start();
+        }
+
         private static void MakeItSleepIfTrue(IReadOnlyList<string> args)
         {
             if (args.Count <= 0) return;

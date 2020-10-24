@@ -18,7 +18,7 @@ namespace PleaseDownload.Configuration
         public string DownloadLocation { get; private set; } = "./downloads";
         public int MinimumInternetSpeed { get; private set; } = 30;
         public int MinimumGoodPings { get; private set; } = 5;
-        public string DownloadList { get; private set; } = "./files.txt";
+        public string TasksLocation { get; private set; } = "./MyTasks.txt";
 
         private void LoadSettings()
         {
@@ -28,7 +28,7 @@ namespace PleaseDownload.Configuration
                 DownloadLocation = localSettings.DownloadLocation;
                 MinimumGoodPings = localSettings.MinimumGoodPings;
                 MinimumInternetSpeed = localSettings.MinimumInternetSpeed;
-                DownloadList = localSettings.DownloadList;
+                TasksLocation = localSettings.TasksLocation;
             }
             catch (Exception)
             {
