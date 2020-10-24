@@ -17,7 +17,7 @@ namespace Automato.Helpers
 
         public const string ErrorInitiatingConfiguration = "Error when initiating the configuration, " +
                                                            "Make sure you have the permission to create files in this location";
-        
+
 
         public static string WaitForBetterInternet(double speed)
         {
@@ -38,12 +38,12 @@ namespace Automato.Helpers
         {
             return "\nFailed downloading " + fileName + "\n";
         }
-        
+
         public static string DisplayProcessExecutionResult(string processOutput)
         {
             return "\n========Result========\n" + processOutput + "================\n";
         }
-        
+
         public static string TaskNotRecognized(string task)
         {
             return $"Task {task} is not supported, visit https://github.com/Amine-Smahi/Automato for more info";

@@ -53,7 +53,7 @@ namespace Automato.Helpers
             else
                 Messages.ShowMessage(Messages.OsNotDetected);
         }
-        
+
         private static void StartProcessWithResult(Process process)
         {
             var result = string.Empty;

@@ -52,7 +52,7 @@ namespace Automato.Helpers
 
         public static string CreatePath(string url, string downloadFolder)
         {
-            var filename = Path.GetFileName(url);
+            var filename = GetFileName(url);
             var newPath = Path.Combine(downloadFolder, filename);
             return newPath;
         }
