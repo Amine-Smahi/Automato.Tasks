@@ -4,7 +4,6 @@ namespace PleaseDownload.Helpers
 {
     public static class Messages
     {
-        
         public const string Finish = "Finished!";
         public const string Preparing = "Preparing...";
         public const string StartAgain = "Starting again...";

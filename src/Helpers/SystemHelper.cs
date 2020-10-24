@@ -84,23 +84,23 @@ namespace PleaseDownload.Helpers
         private static string ExecuteCommandForLinux(string command)
         {
             var result = "";
-            using var proc = new Process
+            using var process = new Process
             {
                 StartInfo =
                 {
                     FileName = "/bin/bash",
-                    Arguments = "-c \" " + command + " \"",
+                    Arguments = "-c \"" + command + "\"",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true
                 }
             };
-            proc.Start();
+            process.Start();
 
-            result += proc.StandardOutput.ReadToEnd();
-            result += proc.StandardError.ReadToEnd();
+            result += process.StandardOutput.ReadToEnd();
+            result += process.StandardError.ReadToEnd();
 
-            proc.WaitForExit();
+            process.WaitForExit();
 
             Console.WriteLine("\n" + result + "\n");
             return result;

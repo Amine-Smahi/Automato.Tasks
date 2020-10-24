@@ -25,16 +25,16 @@ namespace PleaseDownload.Handlers
                     Settings.MinimumGoodPings,
                     Settings.MinimumGoodPings);
 
-                if (task.Contains(TaskType.Download.ToString()))
+                if (GetValueFromTask(task,0).Contains(TaskType.Download.ToString()))
                 {
                     Messages.ShowMessage(Messages.StartsDownloading);
-                    if (DownloadFileHandler(RemoveTaskType(task, TaskType.Download)))
+                    if (DownloadFileHandler(GetValueFromTask(task, 1)))
                         continue;
                 }
                 else
                 {
                     Messages.ShowMessage(Messages.ExecutingTask);
-                    SystemHelper.ExecuteCommand(RemoveTaskType(task, TaskType.Cmd));
+                    SystemHelper.ExecuteCommand(GetValueFromTask(task, 1));
                     IoHelper.RemoveTaskFromTheList(Settings.TasksLocation);
                 }
 
@@ -42,9 +42,10 @@ namespace PleaseDownload.Handlers
             }
         }
 
-        private static string RemoveTaskType(string task, TaskType type)
+        private static string GetValueFromTask(string task, int index)
         {
-            return task.Replace(type + " ", string.Empty);
+            var attributes = task.Split(Settings.TaskTypeSplitter);
+            return attributes[index];
         }
 
         private static bool DownloadFileHandler(string url)

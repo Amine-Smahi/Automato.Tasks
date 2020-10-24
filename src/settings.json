@@ -1,7 +1,0 @@
-{
-  "SettingsFileLocation": "./settings.json",
-  "DownloadLocation": "./downloads",
-  "MinimumInternetSpeed": 2,
-  "MinimumGoodPings": 5,
-  "TasksLocation": "./MyTasks.txt"
-}
