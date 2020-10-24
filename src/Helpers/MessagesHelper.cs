@@ -44,9 +44,9 @@ namespace Automato.Helpers
             return "\n========Result========\n" + processOutput + "================\n";
         }
 
-        public static string TaskNotRecognized(string task)
+        public static string TaskNotRecognized(string type)
         {
-            return $"Task {task} is not supported, visit https://github.com/Amine-Smahi/Automato for more info";
+            return $"Task type {type} is not supported, visit https://github.com/Amine-Smahi/Automato for more info";
         }
 
         public static void ShowMessage(string message)

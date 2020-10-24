@@ -39,7 +39,7 @@ namespace Automato.Handlers
                 }
                 else
                 {
-                    Messages.ShowMessage(Messages.TaskNotRecognized(task));
+                    Messages.ShowMessage(Messages.TaskNotRecognized(GetValueFromTask(task, 0)));
                 }
 
                 break;
