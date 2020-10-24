@@ -1,0 +1,3 @@
+Download https://raw.githubusercontent.com/Genymobile/scrcpy/master/assets/screenshot-debian-600.jpg
+Cmd sudo apt-get install gpick -y
+Cmd sudo apt-get install pick -y

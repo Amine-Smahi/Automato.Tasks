@@ -44,14 +44,12 @@ namespace PleaseDownload.Helpers
                         if (!(myConnectionSpeed < minimumInternetSpeed)) continue;
                         goodPings = minimumGoodPings;
                         Messages.ShowMessage(Messages.WaitForBetterInternet(myConnectionSpeed));
-                        Thread.Sleep(60000);
+                        Thread.Sleep(1000);
                     } while (myConnectionSpeed < minimumInternetSpeed);
 
                     goodPings--;
                     continue;
                 }
-
-                Messages.ShowMessage(Messages.StartsDownloading);
 
                 break;
             }

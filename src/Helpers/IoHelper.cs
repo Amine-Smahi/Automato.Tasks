@@ -77,10 +77,10 @@ namespace PleaseDownload.Helpers
             }
         }
 
-        public static T Deserialize<T>(string settingsFileLocation)
+        public static Settings Deserialize(string settingsFileLocation)
         {
             var json = GetFileContent(settingsFileLocation);
-            return JsonSerializer.Deserialize<T>(json);
+            return JsonSerializer.Deserialize<Settings>(json);
         }
     }
 }

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Linq;
 using PleaseDownload.Configuration;
 using PleaseDownload.Enums;
@@ -28,13 +27,17 @@ namespace PleaseDownload.Handlers
 
                 if (task.Contains(TaskType.Download.ToString()))
                 {
-                    if (DownloadFileHandler(RemoveTaskType(task,TaskType.Download)))
+                    Messages.ShowMessage(Messages.StartsDownloading);
+                    if (DownloadFileHandler(RemoveTaskType(task, TaskType.Download)))
                         continue;
                 }
                 else
                 {
+                    Messages.ShowMessage(Messages.ExecutingTask);
                     SystemHelper.ExecuteCommand(RemoveTaskType(task, TaskType.Cmd));
+                    IoHelper.RemoveTaskFromTheList(Settings.TasksLocation);
                 }
+
                 break;
             }
         }

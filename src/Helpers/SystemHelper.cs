@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -29,17 +30,14 @@ namespace PleaseDownload.Helpers
 
         public static void ExecuteCommand(string command)
         {
-            var process = new Process();
-            
             if (IsLinux())
-                process.StartInfo = ExecuteCommandForLinux(command);
+                ExecuteCommandForLinux(command);
             else if (IsWindows())
-                process.StartInfo = SuspendForWindows();
+                SuspendForWindows();
             else if (IsMac())
-                process.StartInfo = SuspendForMac();
+                SuspendForMac();
             else
                 Messages.ShowMessage(Messages.OsNotDetected);
-            process.Start();
         }
 
         private static void MakeItSleepIfTrue(IReadOnlyList<string> args)
@@ -47,17 +45,14 @@ namespace PleaseDownload.Helpers
             if (args.Count <= 0) return;
             if (args[0] != "true") return;
 
-            var process = new Process();
-
             if (IsLinux())
-                process.StartInfo = ExecuteCommandForLinux("systemctl suspend");
+                ExecuteCommandForLinux("systemctl suspend");
             else if (IsWindows())
-                process.StartInfo = SuspendForWindows();
+                SuspendForWindows();
             else if (IsMac())
-                process.StartInfo = SuspendForMac();
+                SuspendForMac();
             else
                 Messages.ShowMessage(Messages.OsNotDetected);
-            process.Start();
         }
 
         private static ProcessStartInfo SuspendForMac()
@@ -86,17 +81,29 @@ namespace PleaseDownload.Helpers
             return startInfo;
         }
 
-        private static ProcessStartInfo ExecuteCommandForLinux(string command)
+        private static string ExecuteCommandForLinux(string command)
         {
-            var startInfo = new ProcessStartInfo
+            var result = "";
+            using var proc = new Process
             {
-                FileName = "/bin/bash",
-                Arguments = $"-c \"{command}\"",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
+                StartInfo =
+                {
+                    FileName = "/bin/bash",
+                    Arguments = "-c \" " + command + " \"",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                }
             };
-            return startInfo;
+            proc.Start();
+
+            result += proc.StandardOutput.ReadToEnd();
+            result += proc.StandardError.ReadToEnd();
+
+            proc.WaitForExit();
+
+            Console.WriteLine("\n" + result + "\n");
+            return result;
         }
     }
 }

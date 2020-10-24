@@ -16,7 +16,7 @@ namespace PleaseDownload.Configuration
 
         public string SettingsFileLocation { get; } = "./settings.json";
         public string DownloadLocation { get; private set; } = "./downloads";
-        public int MinimumInternetSpeed { get; private set; } = 30;
+        public int MinimumInternetSpeed { get; private set; } = 5;
         public int MinimumGoodPings { get; private set; } = 5;
         public string TasksLocation { get; private set; } = "./MyTasks.txt";
 
@@ -24,7 +24,7 @@ namespace PleaseDownload.Configuration
         {
             try
             {
-                var localSettings = IoHelper.Deserialize<Settings>(SettingsFileLocation);
+                var localSettings = IoHelper.Deserialize(SettingsFileLocation);
                 DownloadLocation = localSettings.DownloadLocation;
                 MinimumGoodPings = localSettings.MinimumGoodPings;
                 MinimumInternetSpeed = localSettings.MinimumInternetSpeed;
