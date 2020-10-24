@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Threading;
 
-namespace PleaseDownload.Helpers
+namespace Autotomato.Helpers
 {
     public static class NetworkHelper
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace PleaseDownload.Helpers
+namespace Autotomato.Helpers
 {
     public static class SystemHelper
     {

@@ -1,4 +1,4 @@
-namespace PleaseDownload.Enums
+namespace Autotomato.Enums
 {
     public enum TaskType
     {

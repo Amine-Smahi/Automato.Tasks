@@ -1,7 +1,7 @@
 using System;
-using PleaseDownload.Helpers;
+using Autotomato.Helpers;
 
-namespace PleaseDownload.Configuration
+namespace Autotomato.Configuration
 {
     public class Settings
     {

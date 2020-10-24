@@ -1,7 +1,7 @@
-﻿using PleaseDownload.Handlers;
-using PleaseDownload.Helpers;
+﻿using Autotomato.Handlers;
+using Autotomato.Helpers;
 
-namespace PleaseDownload
+namespace Autotomato
 {
     internal static class Program
     {

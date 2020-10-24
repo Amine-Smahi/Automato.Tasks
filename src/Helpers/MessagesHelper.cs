@@ -1,6 +1,6 @@
 using System;
 
-namespace PleaseDownload.Helpers
+namespace Autotomato.Helpers
 {
     public static class Messages
     {

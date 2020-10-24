@@ -1,9 +1,9 @@
 using System.Linq;
-using PleaseDownload.Configuration;
-using PleaseDownload.Enums;
-using PleaseDownload.Helpers;
+using Autotomato.Configuration;
+using Autotomato.Enums;
+using Autotomato.Helpers;
 
-namespace PleaseDownload.Handlers
+namespace Autotomato.Handlers
 {
     public static class TaskHandler
     {
