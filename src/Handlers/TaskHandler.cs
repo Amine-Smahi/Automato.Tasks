@@ -1,5 +1,6 @@
 using System.Linq;
-using Automato.Configuration;
+using Automato.Constants;
+using Automato.Entities;
 using Automato.Enums;
 using Automato.Helpers;
 
@@ -13,7 +14,7 @@ namespace Automato.Handlers
         {
             var tasks = IoHelper.ReadAllLines(Settings.TasksLocation).ToList();
             if (tasks.Count <= 0) return;
-            Messages.ShowMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
+            MessagesHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
             foreach (var task in tasks) ProcessTask(task);
         }
 
@@ -27,19 +28,19 @@ namespace Automato.Handlers
 
                 if (GetValueFromTask(task, 0).Contains(TaskType.Download.ToString()))
                 {
-                    Messages.ShowMessage(Messages.StartsDownloading);
+                    MessagesHelper.DisplayMessage(Messages.StartsDownloading);
                     if (DownloadFileHandler(GetValueFromTask(task, 1)))
                         continue;
                 }
                 else if (GetValueFromTask(task, 0).Contains(TaskType.Cmd.ToString()))
                 {
-                    Messages.ShowMessage(Messages.ExecutingTask);
+                    MessagesHelper.DisplayMessage(Messages.ExecutingTask);
                     SystemHelper.ExecuteCommand(GetValueFromTask(task, 1));
                     IoHelper.RemoveTaskFromTheList(Settings.TasksLocation);
                 }
                 else
                 {
-                    Messages.ShowMessage(Messages.TaskNotRecognized(GetValueFromTask(task, 0)));
+                    MessagesHelper.DisplayMessage(Messages.TaskNotRecognized(GetValueFromTask(task, 0)));
                 }
 
                 break;
@@ -57,13 +58,13 @@ namespace Automato.Handlers
             var doesSucceed = IoHelper.StartDownload(url, Settings.DownloadLocation);
             if (doesSucceed)
             {
-                Messages.ShowMessage(Messages.SuccessfulDownload(IoHelper.GetFileName(url)));
+                MessagesHelper.DisplayMessage(Messages.SuccessfulDownload(IoHelper.GetFileName(url)));
                 IoHelper.RemoveTaskFromTheList(Settings.TasksLocation);
             }
             else
             {
-                Messages.ShowMessage(Messages.FailedDownload(IoHelper.GetFileName(url)));
-                Messages.ShowMessage(Messages.StartAgain);
+                MessagesHelper.DisplayMessage(Messages.FailedDownload(IoHelper.GetFileName(url)));
+                MessagesHelper.DisplayMessage(Messages.StartAgain);
                 return true;
             }
 

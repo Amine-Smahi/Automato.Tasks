@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Automato.Constants;
 
 namespace Automato.Helpers
 {
@@ -23,7 +24,7 @@ namespace Automato.Helpers
 
         public static void Finish(IReadOnlyList<string> args)
         {
-            Messages.ShowMessage(Messages.Finish);
+            MessagesHelper.DisplayMessage(Messages.Finish);
             MakeItSleepIfTrue(args);
         }
 
@@ -36,7 +37,7 @@ namespace Automato.Helpers
             else if (IsMac())
                 ExecuteCommandForMac("");
             else
-                Messages.ShowMessage(Messages.OsNotDetected);
+                MessagesHelper.DisplayMessage(Messages.OsNotDetected);
         }
 
         private static void MakeItSleepIfTrue(IReadOnlyList<string> args)
@@ -51,7 +52,7 @@ namespace Automato.Helpers
             else if (IsMac())
                 ExecuteCommandForMac("");
             else
-                Messages.ShowMessage(Messages.OsNotDetected);
+                MessagesHelper.DisplayMessage(Messages.OsNotDetected);
         }
 
         private static void StartProcessWithResult(Process process)
@@ -61,7 +62,7 @@ namespace Automato.Helpers
             result += process.StandardOutput.ReadToEnd();
             result += process.StandardError.ReadToEnd();
             process.WaitForExit();
-            Messages.ShowMessage(Messages.DisplayProcessExecutionResult(result));
+            MessagesHelper.DisplayMessage(Messages.DisplayProcessExecutionResult(result));
         }
 
         private static void ExecuteCommandForMac(string command)

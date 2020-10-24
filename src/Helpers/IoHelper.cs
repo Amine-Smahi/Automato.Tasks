@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Automato.Configuration;
+using Automato.Constants;
+using Automato.Entities;
 
 namespace Automato.Helpers
 {
@@ -73,7 +74,7 @@ namespace Automato.Helpers
             }
             catch (Exception)
             {
-                Messages.ShowMessage(Messages.ErrorInitiatingConfiguration);
+                MessagesHelper.DisplayMessage(Messages.ErrorInitiatingConfiguration);
             }
         }
 

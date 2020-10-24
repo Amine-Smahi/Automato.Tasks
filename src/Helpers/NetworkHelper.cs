@@ -1,31 +1,32 @@
 using System;
 using System.Net;
 using System.Threading;
+using Automato.Constants;
 
 namespace Automato.Helpers
 {
     public static class NetworkHelper
     {
-        private static readonly WebClient Wc = new WebClient();
+        private static readonly WebClient WebClient = new WebClient();
 
         public static void DownloadFile(string url, string downloadFolder)
         {
             var filePath = IoHelper.CreatePath(url, downloadFolder);
-            Wc.DownloadFile(url, filePath);
+            WebClient.DownloadFile(url, filePath);
         }
 
         private static double CheckInternetSpeed()
         {
             try
             {
-                var dt1 = DateTime.Now;
-                var data = Wc.DownloadData("http://google.com");
-                var dt2 = DateTime.Now;
-                return Math.Round(data.Length / 1024.0 / (dt2 - dt1).TotalSeconds, 2);
+                var timeBeforeDownloadingFile = DateTime.Now;
+                var data = WebClient.DownloadData("http://google.com");
+                var timeAfterDownloadingFile = DateTime.Now;
+                return Math.Round(data.Length / 1024.0 / (timeAfterDownloadingFile - timeBeforeDownloadingFile).TotalSeconds, 2);
             }
             catch (Exception)
             {
-                Messages.ShowMessage(Messages.NoInternet);
+                MessagesHelper.DisplayMessage(Messages.NoInternet);
                 return 0d;
             }
         }
@@ -43,7 +44,7 @@ namespace Automato.Helpers
                         myConnectionSpeed = CheckInternetSpeed();
                         if (!(myConnectionSpeed < minimumInternetSpeed)) continue;
                         goodPings = minimumGoodPings;
-                        Messages.ShowMessage(Messages.WaitForBetterInternet(myConnectionSpeed));
+                        MessagesHelper.DisplayMessage(Messages.WaitForBetterInternet(myConnectionSpeed));
                         Thread.Sleep(waitingTime);
                     } while (myConnectionSpeed < minimumInternetSpeed);
 
