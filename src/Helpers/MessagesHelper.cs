@@ -1,6 +1,6 @@
 using System;
 
-namespace Autotomato.Helpers
+namespace Automato.Helpers
 {
     public static class Messages
     {

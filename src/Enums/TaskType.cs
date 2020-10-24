@@ -1,4 +1,4 @@
-namespace Autotomato.Enums
+namespace Automato.Enums
 {
     public enum TaskType
     {

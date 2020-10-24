@@ -1,9 +1,9 @@
 using System.Linq;
-using Autotomato.Configuration;
-using Autotomato.Enums;
-using Autotomato.Helpers;
+using Automato.Configuration;
+using Automato.Enums;
+using Automato.Helpers;
 
-namespace Autotomato.Handlers
+namespace Automato.Handlers
 {
     public static class TaskHandler
     {
@@ -25,7 +25,7 @@ namespace Autotomato.Handlers
                     Settings.MinimumGoodPings,
                     Settings.MinimumGoodPings);
 
-                if (GetValueFromTask(task,0).Contains(TaskType.Download.ToString()))
+                if (GetValueFromTask(task, 0).Contains(TaskType.Download.ToString()))
                 {
                     Messages.ShowMessage(Messages.StartsDownloading);
                     if (DownloadFileHandler(GetValueFromTask(task, 1)))

@@ -1,7 +1,7 @@
-﻿using Autotomato.Handlers;
-using Autotomato.Helpers;
+﻿using Automato.Handlers;
+using Automato.Helpers;
 
-namespace Autotomato
+namespace Automato
 {
     internal static class Program
     {

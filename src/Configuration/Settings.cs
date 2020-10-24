@@ -1,7 +1,7 @@
 using System;
-using Autotomato.Helpers;
+using Automato.Helpers;
 
-namespace Autotomato.Configuration
+namespace Automato.Configuration
 {
     public class Settings
     {

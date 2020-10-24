@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Autotomato.Configuration;
+using Automato.Configuration;
 
-namespace Autotomato.Helpers
+namespace Automato.Helpers
 {
     public static class IoHelper
     {
