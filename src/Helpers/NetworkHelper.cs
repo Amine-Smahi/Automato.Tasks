@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using System.Threading;
-using Automato.Constants;
+using Automato.ValueObjects;
 
 namespace Automato.Helpers
 {

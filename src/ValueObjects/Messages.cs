@@ -1,12 +1,12 @@
-namespace Automato.Constants
+namespace Automato.ValueObjects
 {
     public static class Messages
     {
         public const string Finish = "Finished!";
         public const string Preparing = "Preparing...";
         public const string StartAgain = "Starting again...";
-        public const string ExecutingTask = "Executing command...";
-        public const string StartsDownloading = "Starts Downloading...";
+        public const string ExecutingTask = "\nExecuting command...";
+        public const string StartsDownloading = "\nStarts Downloading...";
         public const string OsNotDetected = "Your operating system is not supported";
         public const string NoInternet = "No internet connection, Make sure you are connected to a wifi";
 

@@ -1,6 +1,6 @@
 using System;
-using Automato.Constants;
 using Automato.Entities;
+using Automato.ValueObjects;
 
 namespace Automato.Helpers
 {

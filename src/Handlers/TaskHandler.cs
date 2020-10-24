@@ -1,8 +1,8 @@
 using System.Linq;
-using Automato.Constants;
 using Automato.Entities;
 using Automato.Enums;
 using Automato.Helpers;
+using Automato.ValueObjects;
 
 namespace Automato.Handlers
 {
