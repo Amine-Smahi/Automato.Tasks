@@ -21,7 +21,13 @@ namespace PleaseDownload.Helpers
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
         }
 
-        public static void MakeItSleepIfTrue(IReadOnlyList<string> args)
+        public static void Finish(IReadOnlyList<string> args)
+        {
+            Messages.ShowMessage(Messages.Finish);
+            MakeItSleepIfTrue(args);
+        }
+
+        private static void MakeItSleepIfTrue(IReadOnlyList<string> args)
         {
             if (args.Count <= 0) return;
             if (args[0] != "true") return;
@@ -29,7 +35,7 @@ namespace PleaseDownload.Helpers
             var process = new Process();
 
             if (IsLinux())
-                process.StartInfo = SuspendForLinux();
+                process.StartInfo = ExecuteCommandForLinux("systemctl suspend");
             else if (IsWindows())
                 process.StartInfo = SuspendForWindows();
             else if (IsMac())
@@ -65,12 +71,12 @@ namespace PleaseDownload.Helpers
             return startInfo;
         }
 
-        private static ProcessStartInfo SuspendForLinux()
+        private static ProcessStartInfo ExecuteCommandForLinux(string command)
         {
             var startInfo = new ProcessStartInfo
             {
                 FileName = "/bin/bash",
-                Arguments = "-c \"systemctl suspend\"",
+                Arguments = $"-c \"{command}\"",
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = true
