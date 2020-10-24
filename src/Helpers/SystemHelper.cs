@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -33,9 +32,9 @@ namespace Automato.Helpers
             if (IsLinux())
                 ExecuteCommandForLinux(command);
             else if (IsWindows())
-                SuspendForWindows();
+                ExecuteCommandForWindows("");
             else if (IsMac())
-                SuspendForMac();
+                ExecuteCommandForMac("");
             else
                 Messages.ShowMessage(Messages.OsNotDetected);
         }
@@ -48,45 +47,28 @@ namespace Automato.Helpers
             if (IsLinux())
                 ExecuteCommandForLinux("systemctl suspend");
             else if (IsWindows())
-                SuspendForWindows();
+                ExecuteCommandForWindows("");
             else if (IsMac())
-                SuspendForMac();
+                ExecuteCommandForMac("");
             else
                 Messages.ShowMessage(Messages.OsNotDetected);
         }
-
-        private static ProcessStartInfo SuspendForMac()
+        
+        private static void StartProcessWithResult(Process process)
         {
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = "",
-                Arguments = "",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-            return startInfo;
+            var result = string.Empty;
+            process.Start();
+            result += process.StandardOutput.ReadToEnd();
+            result += process.StandardError.ReadToEnd();
+            process.WaitForExit();
+            Messages.ShowMessage(Messages.DisplayProcessExecutionResult(result));
         }
 
-        private static ProcessStartInfo SuspendForWindows()
+        private static void ExecuteCommandForMac(string command)
         {
-            var startInfo = new ProcessStartInfo
+            var process = new Process
             {
-                FileName = "",
-                Arguments = "",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-            return startInfo;
-        }
-
-        private static string ExecuteCommandForLinux(string command)
-        {
-            var result = "";
-            using var process = new Process
-            {
-                StartInfo =
+                StartInfo = new ProcessStartInfo
                 {
                     FileName = "/bin/bash",
                     Arguments = "-c \"" + command + "\"",
@@ -95,15 +77,39 @@ namespace Automato.Helpers
                     RedirectStandardError = true
                 }
             };
-            process.Start();
+            StartProcessWithResult(process);
+        }
 
-            result += process.StandardOutput.ReadToEnd();
-            result += process.StandardError.ReadToEnd();
+        private static void ExecuteCommandForWindows(string command)
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "/bin/bash",
+                    Arguments = "-c \"" + command + "\"",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                }
+            };
+            StartProcessWithResult(process);
+        }
 
-            process.WaitForExit();
-
-            Console.WriteLine("\n" + result + "\n");
-            return result;
+        private static void ExecuteCommandForLinux(string command)
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "/bin/bash",
+                    Arguments = "-c \"" + command + "\"",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                }
+            };
+            StartProcessWithResult(process);
         }
     }
 }

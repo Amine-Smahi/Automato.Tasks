@@ -16,10 +16,11 @@ namespace Automato.Configuration
 
         public string SettingsFileLocation { get; } = "./settings.json";
         public string DownloadLocation { get; private set; } = "./downloads";
-        public int MinimumInternetSpeed { get; private set; } = 5;
+        public int MinimumInternetSpeed { get; private set; } = 30;
         public int MinimumGoodPings { get; private set; } = 5;
         public string TasksLocation { get; private set; } = "./MyTasks.txt";
         public string TaskTypeSplitter { get; private set; } = "=>";
+        public int WaitFewSecondsForAnotherTry { get; private set; } = 2000;
 
         private void LoadSettings()
         {
@@ -30,7 +31,8 @@ namespace Automato.Configuration
                 MinimumGoodPings = localSettings.MinimumGoodPings;
                 MinimumInternetSpeed = localSettings.MinimumInternetSpeed;
                 TasksLocation = localSettings.TasksLocation;
-                TaskTypeSplitter = TaskTypeSplitter;
+                TaskTypeSplitter = localSettings.TaskTypeSplitter;
+                WaitFewSecondsForAnotherTry = localSettings.WaitFewSecondsForAnotherTry;
             }
             catch (Exception)
             {

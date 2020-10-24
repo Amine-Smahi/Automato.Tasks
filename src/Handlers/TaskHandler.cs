@@ -23,7 +23,7 @@ namespace Automato.Handlers
             {
                 NetworkHelper.WaitForDecentInternetConnection(Settings.MinimumInternetSpeed,
                     Settings.MinimumGoodPings,
-                    Settings.MinimumGoodPings);
+                    Settings.MinimumGoodPings, Settings.WaitFewSecondsForAnotherTry);
 
                 if (GetValueFromTask(task, 0).Contains(TaskType.Download.ToString()))
                 {
@@ -31,11 +31,15 @@ namespace Automato.Handlers
                     if (DownloadFileHandler(GetValueFromTask(task, 1)))
                         continue;
                 }
-                else
+                else if (GetValueFromTask(task, 0).Contains(TaskType.Cmd.ToString()))
                 {
                     Messages.ShowMessage(Messages.ExecutingTask);
                     SystemHelper.ExecuteCommand(GetValueFromTask(task, 1));
                     IoHelper.RemoveTaskFromTheList(Settings.TasksLocation);
+                }
+                else
+                {
+                    Messages.ShowMessage(Messages.TaskNotRecognized(task));
                 }
 
                 break;

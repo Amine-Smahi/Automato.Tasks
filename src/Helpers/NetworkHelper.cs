@@ -31,7 +31,7 @@ namespace Automato.Helpers
         }
 
         public static void WaitForDecentInternetConnection(double minimumInternetSpeed, int goodPings,
-            int minimumGoodPings)
+            int minimumGoodPings, int waitingTime)
         {
             while (true)
             {
@@ -44,7 +44,7 @@ namespace Automato.Helpers
                         if (!(myConnectionSpeed < minimumInternetSpeed)) continue;
                         goodPings = minimumGoodPings;
                         Messages.ShowMessage(Messages.WaitForBetterInternet(myConnectionSpeed));
-                        Thread.Sleep(1000);
+                        Thread.Sleep(waitingTime);
                     } while (myConnectionSpeed < minimumInternetSpeed);
 
                     goodPings--;
