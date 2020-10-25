@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using Automato.Models;
 using Automato.ValueObjects;
 
@@ -10,7 +9,7 @@ namespace Automato.Helpers
 {
     public static class IoHelper
     {
-        private static string GetFileContent(string settingsFileLocation)
+        public static string GetFileContent(string settingsFileLocation)
         {
             return File.ReadAllText(settingsFileLocation);
         }
@@ -65,9 +64,8 @@ namespace Automato.Helpers
                 if (!FileExists(settings.TasksLocation)) File.CreateText(settings.TasksLocation);
                 if (!FileExists(settings.SettingsFileLocation))
                 {
-                    var jsonOptions = new JsonSerializerOptions {WriteIndented = true};
                     File.CreateText(settings.SettingsFileLocation);
-                    File.WriteAllText(settings.SettingsFileLocation, JsonSerializer.Serialize(settings, jsonOptions));
+                    File.WriteAllText(settings.SettingsFileLocation, JsonHelper.Serialize(settings));
                 }
 
                 if (!Directory.Exists(settings.DownloadLocation)) Directory.CreateDirectory(settings.DownloadLocation);
@@ -76,12 +74,6 @@ namespace Automato.Helpers
             {
                 MessagesHelper.DisplayMessage(Messages.ErrorInitiatingConfiguration);
             }
-        }
-
-        public static Settings Deserialize(string settingsFileLocation)
-        {
-            var json = GetFileContent(settingsFileLocation);
-            return JsonSerializer.Deserialize<Settings>(json, new JsonSerializerOptions());
         }
     }
 }

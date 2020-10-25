@@ -19,7 +19,7 @@ namespace Automato.Behaviors
             if (!load) return;
             try
             {
-                SetSettings(IoHelper.Deserialize(_settings.SettingsFileLocation));
+                SetSettings(JsonHelper.Deserialize<Settings>(_settings.SettingsFileLocation));
             }
             catch (Exception)
             {
