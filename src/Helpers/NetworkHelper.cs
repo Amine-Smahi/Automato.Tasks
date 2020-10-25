@@ -73,14 +73,14 @@ namespace Automato.Helpers
             }
         }
 
-        private static void HandleDownloadComplete(object sender, AsyncCompletedEventArgs e)
+        private static void HandleDownloadComplete(object sender, AsyncCompletedEventArgs eventArgs)
         {
-            ThreadsHelper.PulseMonitor(e);
+            ThreadsHelper.PulseMonitor(eventArgs);
         }
 
-        private static void HandleDownloadProgress(object sender, DownloadProgressChangedEventArgs args)
+        private static void HandleDownloadProgress(object sender, DownloadProgressChangedEventArgs eventArgs)
         {
-            var percentage = Math.Round(args.BytesReceived / (float) args.TotalBytesToReceive * 100);
+            var percentage = Math.Round(eventArgs.BytesReceived / (float) eventArgs.TotalBytesToReceive * 100);
             MessagesHelper.DisplayDynamicMessage(Messages.DownloadProgress(percentage));
         }
     }
