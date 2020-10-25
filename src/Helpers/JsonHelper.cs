@@ -6,7 +6,7 @@ namespace Automato.Helpers
     {
         public static T Deserialize<T>(string json)
         {
-            return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions());
+            return JsonSerializer.Deserialize<T>(json);
         }
 
         public static string Serialize(object obj)
