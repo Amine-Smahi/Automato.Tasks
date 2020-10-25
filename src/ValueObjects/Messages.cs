@@ -18,7 +18,7 @@ namespace Automato.ValueObjects
 
         public static string WaitForBetterInternet(double speed)
         {
-            return $"Waiting for a better internet connexion speed........({speed} Kb/s)";
+            return $"\x000DWaiting for a better internet connexion speed........({speed} Kb/s)";
         }
 
         public static string Welcome(in int tasksCount, string tasksLocation)

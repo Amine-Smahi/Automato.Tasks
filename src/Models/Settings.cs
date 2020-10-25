@@ -1,43 +1,27 @@
-using System;
-using Automato.Helpers;
-using Automato.ValueObjects;
+using Automato.Behaviors;
 
 namespace Automato.Models
 {
     public class Settings
     {
-        public string SettingsFileLocation { get; } = "./settings.json";
-        public string DownloadLocation { get; private set; } = "./downloads";
-        public int MinimumInternetSpeed { get; private set; } = 30;
-        public int MinimumGoodPings { get; private set; } = 5;
-        public string TasksLocation { get; private set; } = "./MyTasks.txt";
-        public string TaskTypeSplitter { get; private set; } = "=>";
-        public int WaitFewSecondsForAnotherTry { get; private set; } = 2000;
+        private readonly SettingsBehavior _settingsBehavior;
 
-        public void LoadSettings()
+        public Settings()
         {
-            try
-            {
-                var localSettings = IoHelper.Deserialize(SettingsFileLocation);
-                DownloadLocation = localSettings.DownloadLocation;
-                MinimumGoodPings = localSettings.MinimumGoodPings;
-                MinimumInternetSpeed = localSettings.MinimumInternetSpeed;
-                TasksLocation = localSettings.TasksLocation;
-                TaskTypeSplitter = localSettings.TaskTypeSplitter;
-                WaitFewSecondsForAnotherTry = localSettings.WaitFewSecondsForAnotherTry;
-            }
-            catch (Exception)
-            {
-                if (!IoHelper.FileExists(SettingsFileLocation))
-                {
-                    MessagesHelper.DisplayMessage(Messages.Preparing);
-                    IoHelper.PrepareEnvironment(new Settings());
-                }
-                else
-                {
-                    MessagesHelper.DisplayMessage(Messages.ErrorInSettings);
-                }
-            }
+            _settingsBehavior = new SettingsBehavior(this);
         }
+
+        public bool LoadingSettings
+        {
+            set => _settingsBehavior.LoadSettings(value);
+        }
+
+        public string SettingsFileLocation { get; } = "./settings.json";
+        public string DownloadLocation { get; set; } = "./downloads";
+        public int MinimumInternetSpeed { get; set; } = 30;
+        public int MinimumGoodPings { get; set; } = 5;
+        public string TasksLocation { get; set; } = "./MyTasks.txt";
+        public string TaskTypeSplitter { get; set; } = "=>";
+        public int WaitFewSecondsForAnotherTry { get; set; } = 2000;
     }
 }

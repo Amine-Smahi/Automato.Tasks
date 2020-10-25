@@ -81,7 +81,7 @@ namespace Automato.Helpers
         public static Settings Deserialize(string settingsFileLocation)
         {
             var json = GetFileContent(settingsFileLocation);
-            return JsonSerializer.Deserialize<Settings>(json);
+            return JsonSerializer.Deserialize<Settings>(json, new JsonSerializerOptions());
         }
     }
 }

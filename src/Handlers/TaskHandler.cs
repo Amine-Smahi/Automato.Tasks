@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Automato.Enums;
 using Automato.Helpers;
@@ -8,11 +9,10 @@ namespace Automato.Handlers
 {
     public static class TaskHandler
     {
-        private static readonly Settings Settings = new Settings();
+        private static readonly Settings Settings = new Settings {LoadingSettings = true};
 
         public static void ExecuteTasks()
         {
-            Settings.LoadSettings();
             var tasks = IoHelper.ReadAllLines(Settings.TasksLocation).ToList();
             if (tasks.Count <= 0) return;
             MessagesHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));

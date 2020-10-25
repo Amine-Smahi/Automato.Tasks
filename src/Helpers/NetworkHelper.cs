@@ -53,7 +53,7 @@ namespace Automato.Helpers
                         myConnectionSpeed = CheckInternetSpeed();
                         if (!(myConnectionSpeed < minimumInternetSpeed)) continue;
                         goodPings = minimumGoodPings;
-                        MessagesHelper.DisplayMessage(Messages.WaitForBetterInternet(myConnectionSpeed));
+                        MessagesHelper.DisplayDynamicMessage(Messages.WaitForBetterInternet(myConnectionSpeed));
                         Thread.Sleep(waitingTime);
                     } while (myConnectionSpeed < minimumInternetSpeed);
 
