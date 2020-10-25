@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Net;
-using System.Threading;
 using Automato.ValueObjects;
 
 namespace Automato.Helpers
@@ -21,7 +20,7 @@ namespace Automato.Helpers
                 lock (syncObject)
                 {
                     WebClient.DownloadFileAsync(new Uri(url), filePath, syncObject);
-                    Monitor.Wait(syncObject);
+                    ThreadsHelper.MonitorWait(syncObject);
                 }
 
                 return true;
@@ -63,7 +62,7 @@ namespace Automato.Helpers
                         if (!(myConnectionSpeed < minimumInternetSpeed)) continue;
                         goodPings = minimumGoodPings;
                         MessagesHelper.DisplayDynamicMessage(Messages.WaitForBetterInternet(myConnectionSpeed));
-                        Thread.Sleep(waitingTime);
+                        ThreadsHelper.Sleep(waitingTime);
                     } while (myConnectionSpeed < minimumInternetSpeed);
 
                     goodPings--;
@@ -76,10 +75,7 @@ namespace Automato.Helpers
 
         private static void HandleDownloadComplete(object sender, AsyncCompletedEventArgs e)
         {
-            lock (e.UserState)
-            {
-                Monitor.Pulse(e.UserState);
-            }
+            ThreadsHelper.PulseMonitor(e);
         }
 
         private static void HandleDownloadProgress(object sender, DownloadProgressChangedEventArgs args)
