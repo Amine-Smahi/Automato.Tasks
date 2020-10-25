@@ -65,7 +65,9 @@ namespace Automato.Helpers
                 if (!FileExists(settings.SettingsFileLocation))
                 {
                     File.CreateText(settings.SettingsFileLocation);
-                    File.WriteAllText(settings.SettingsFileLocation, JsonHelper.Serialize(settings));
+                    File.WriteAllText(settings.SettingsFileLocation,
+                        JsonHelper.Serialize(
+                            GetFileContent(settings.SettingsFileLocation)));
                 }
 
                 if (!Directory.Exists(settings.DownloadLocation)) Directory.CreateDirectory(settings.DownloadLocation);

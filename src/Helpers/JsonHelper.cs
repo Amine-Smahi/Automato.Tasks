@@ -1,5 +1,4 @@
 using System.Text.Json;
-using Automato.Models;
 
 namespace Automato.Helpers
 {
