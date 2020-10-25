@@ -10,16 +10,25 @@ namespace Automato.Helpers
     {
         private static readonly WebClient WebClient = new WebClient();
 
-        public static void DownloadFile(string url, string downloadFolder)
+        public static bool DownloadFile(string url, string downloadFolder)
         {
-            var filePath = IoHelper.CreatePath(url, downloadFolder);
-            WebClient.DownloadProgressChanged += HandleDownloadProgress;
-            WebClient.DownloadFileCompleted += HandleDownloadComplete;
-            var syncObject = new object();
-            lock (syncObject)
+            try
             {
-                WebClient.DownloadFileAsync(new Uri(url), filePath, syncObject);
-                Monitor.Wait(syncObject);
+                var filePath = IoHelper.CreatePath(url, downloadFolder);
+                WebClient.DownloadProgressChanged += HandleDownloadProgress;
+                WebClient.DownloadFileCompleted += HandleDownloadComplete;
+                var syncObject = new object();
+                lock (syncObject)
+                {
+                    WebClient.DownloadFileAsync(new Uri(url), filePath, syncObject);
+                    Monitor.Wait(syncObject);
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 
@@ -33,7 +42,7 @@ namespace Automato.Helpers
                 return Math.Round(
                     data.Length / 1024.0 / (timeAfterDownloadingFile - timeBeforeDownloadingFile).TotalSeconds, 2);
             }
-            catch (Exception)
+            catch
             {
                 MessagesHelper.DisplayMessage(Messages.NoInternet);
                 return 0d;

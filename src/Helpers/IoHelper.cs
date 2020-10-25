@@ -1,15 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Automato.Models;
-using Automato.ValueObjects;
 
 namespace Automato.Helpers
 {
     public static class IoHelper
     {
-        private static string GetFileContent(string settingsFileLocation)
+        public static string GetFileContent(string settingsFileLocation)
         {
             return File.ReadAllText(settingsFileLocation);
         }
@@ -29,25 +26,11 @@ namespace Automato.Helpers
             return File.Exists(filePath);
         }
 
-        public static void RemoveTaskFromTheList(string path)
+        public static void RemoveFirstLineFromTextFile(string path)
         {
             var linksList = File.ReadAllLines(path).ToList();
             linksList.RemoveAt(0);
             File.WriteAllLines(path, linksList.ToArray());
-        }
-
-        public static bool StartDownload(string url, string downloadFolder)
-        {
-            try
-            {
-                NetworkHelper.DownloadFile(url, downloadFolder);
-                return true;
-            }
-            catch (Exception)
-            {
-                PrepareEnvironment(new Settings());
-                return false;
-            }
         }
 
         public static string CreatePath(string url, string downloadFolder)
@@ -55,24 +38,24 @@ namespace Automato.Helpers
             return Path.Combine(downloadFolder, GetFileName(url));
         }
 
-        public static void PrepareEnvironment(Settings settings)
+        public static void WriteAllText(string fileLocation, string content)
         {
-            try
-            {
-                if (!FileExists(settings.TasksLocation)) File.CreateText(settings.TasksLocation);
-                if (!FileExists(settings.SettingsFileLocation))
-                {
-                    File.CreateText(settings.SettingsFileLocation);
-                    var content = GetFileContent(settings.SettingsFileLocation);
-                    File.WriteAllText(settings.SettingsFileLocation, JsonHelper.Serialize(content));
-                }
+            File.WriteAllText(fileLocation, content);
+        }
 
-                if (!Directory.Exists(settings.DownloadLocation)) Directory.CreateDirectory(settings.DownloadLocation);
-            }
-            catch (Exception)
-            {
-                MessagesHelper.DisplayMessage(Messages.ErrorInitiatingConfiguration);
-            }
+        public static void OpenOrCreateFile(string filePath)
+        {
+            File.CreateText(filePath);
+        }
+
+        public static bool DirectoryExists(string directoryPath)
+        {
+            return Directory.Exists(directoryPath);
+        }
+
+        public static void CreateDirectory(string directoryPath)
+        {
+            Directory.CreateDirectory(directoryPath);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Automato.Handlers
                 {
                     MessagesHelper.DisplayMessage(Messages.ExecutingTask);
                     SystemHelper.ExecuteCommand(GetValueFromTask(task, 1));
-                    IoHelper.RemoveTaskFromTheList(Settings.TasksLocation);
+                    IoHelper.RemoveFirstLineFromTextFile(Settings.TasksLocation);
                 }
                 else
                 {
@@ -55,11 +55,11 @@ namespace Automato.Handlers
 
         private static bool DownloadFileHandler(string url)
         {
-            var doesSucceed = IoHelper.StartDownload(url, Settings.DownloadLocation);
+            var doesSucceed = NetworkHelper.DownloadFile(url, Settings.DownloadLocation);
             if (doesSucceed)
             {
                 MessagesHelper.DisplayMessage(Messages.SuccessfulDownload(IoHelper.GetFileName(url)));
-                IoHelper.RemoveTaskFromTheList(Settings.TasksLocation);
+                IoHelper.RemoveFirstLineFromTextFile(Settings.TasksLocation);
             }
             else
             {

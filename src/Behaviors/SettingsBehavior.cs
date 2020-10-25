@@ -26,7 +26,7 @@ namespace Automato.Behaviors
                 if (!IoHelper.FileExists(_settings.SettingsFileLocation))
                 {
                     MessagesHelper.DisplayMessage(Messages.Preparing);
-                    IoHelper.PrepareEnvironment(new Settings());
+                    PrepareEnvironment(new Settings());
                 }
                 else
                 {
@@ -43,6 +43,27 @@ namespace Automato.Behaviors
             _settings.TasksLocation = localSettings.TasksLocation;
             _settings.TaskTypeSplitter = localSettings.TaskTypeSplitter;
             _settings.WaitFewSecondsForAnotherTry = localSettings.WaitFewSecondsForAnotherTry;
+        }
+
+        private static void PrepareEnvironment(Settings settings)
+        {
+            try
+            {
+                if (!IoHelper.FileExists(settings.TasksLocation)) IoHelper.OpenOrCreateFile(settings.TasksLocation);
+                if (!IoHelper.FileExists(settings.SettingsFileLocation))
+                {
+                    IoHelper.OpenOrCreateFile(settings.SettingsFileLocation);
+                    var content = IoHelper.GetFileContent(settings.SettingsFileLocation);
+                    IoHelper.WriteAllText(settings.SettingsFileLocation, JsonHelper.Serialize(content));
+                }
+
+                if (!IoHelper.DirectoryExists(settings.DownloadLocation))
+                    IoHelper.CreateDirectory(settings.DownloadLocation);
+            }
+            catch
+            {
+                MessagesHelper.DisplayMessage(Messages.ErrorInitiatingConfiguration);
+            }
         }
     }
 }

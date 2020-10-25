@@ -21,7 +21,7 @@ namespace Automato.ValueObjects
             return $"\x000DWaiting for a better internet connexion speed........({speed} Kb/s)";
         }
 
-        public static string Welcome(in int tasksCount, string tasksLocation)
+        public static string Welcome(int tasksCount, string tasksLocation)
         {
             return $"Found ({tasksCount}) tasks in {tasksLocation}, Lets Go!\n";
         }
