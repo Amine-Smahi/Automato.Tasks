@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Net;
 using System.Threading;
 using Automato.ValueObjects;
@@ -12,7 +13,14 @@ namespace Automato.Helpers
         public static void DownloadFile(string url, string downloadFolder)
         {
             var filePath = IoHelper.CreatePath(url, downloadFolder);
-            WebClient.DownloadFile(url, filePath);
+            WebClient.DownloadProgressChanged += HandleDownloadProgress;
+            WebClient.DownloadFileCompleted += HandleDownloadComplete;
+            var syncObject = new object();
+            lock (syncObject)
+            {
+                WebClient.DownloadFileAsync(new Uri(url), filePath, syncObject);
+                Monitor.Wait(syncObject);
+            }
         }
 
         private static double CheckInternetSpeed()
@@ -22,7 +30,8 @@ namespace Automato.Helpers
                 var timeBeforeDownloadingFile = DateTime.Now;
                 var data = WebClient.DownloadData("http://google.com");
                 var timeAfterDownloadingFile = DateTime.Now;
-                return Math.Round(data.Length / 1024.0 / (timeAfterDownloadingFile - timeBeforeDownloadingFile).TotalSeconds, 2);
+                return Math.Round(
+                    data.Length / 1024.0 / (timeAfterDownloadingFile - timeBeforeDownloadingFile).TotalSeconds, 2);
             }
             catch (Exception)
             {
@@ -54,6 +63,20 @@ namespace Automato.Helpers
 
                 break;
             }
+        }
+
+        private static void HandleDownloadComplete(object sender, AsyncCompletedEventArgs e)
+        {
+            lock (e.UserState)
+            {
+                Monitor.Pulse(e.UserState);
+            }
+        }
+
+        private static void HandleDownloadProgress(object sender, DownloadProgressChangedEventArgs args)
+        {
+            var percentage = Math.Round(args.BytesReceived / (float) args.TotalBytesToReceive * 100);
+            MessagesHelper.DisplayMessageSameLine(Messages.DownloadProgress(percentage));
         }
     }
 }

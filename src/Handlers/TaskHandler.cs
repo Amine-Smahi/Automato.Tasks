@@ -26,13 +26,13 @@ namespace Automato.Handlers
                     Settings.MinimumGoodPings,
                     Settings.MinimumGoodPings, Settings.WaitFewSecondsForAnotherTry);
 
-                if (GetValueFromTask(task, 0).Contains(TaskType.Download.ToString()))
+                if (GetValueFromTask(task, 0).ToLower().Contains(TaskType.Download.ToString().ToLower()))
                 {
                     MessagesHelper.DisplayMessage(Messages.StartsDownloading);
                     if (DownloadFileHandler(GetValueFromTask(task, 1)))
                         continue;
                 }
-                else if (GetValueFromTask(task, 0).Contains(TaskType.Cmd.ToString()))
+                else if (GetValueFromTask(task, 0).ToLower().Contains(TaskType.Cmd.ToString().ToLower()))
                 {
                     MessagesHelper.DisplayMessage(Messages.ExecutingTask);
                     SystemHelper.ExecuteCommand(GetValueFromTask(task, 1));

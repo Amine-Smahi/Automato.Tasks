@@ -45,5 +45,10 @@ namespace Automato.ValueObjects
         {
             return $"Task type {type} is not supported, visit https://github.com/Amine-Smahi/Automato for more info";
         }
+
+        public static string DownloadProgress(double percentage)
+        {
+            return "\x000DProgress => " + percentage + "%";
+        }
     }
 }
