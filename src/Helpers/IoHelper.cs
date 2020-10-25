@@ -9,7 +9,7 @@ namespace Automato.Helpers
 {
     public static class IoHelper
     {
-        public static string GetFileContent(string settingsFileLocation)
+        private static string GetFileContent(string settingsFileLocation)
         {
             return File.ReadAllText(settingsFileLocation);
         }
@@ -52,9 +52,7 @@ namespace Automato.Helpers
 
         public static string CreatePath(string url, string downloadFolder)
         {
-            var filename = GetFileName(url);
-            var newPath = Path.Combine(downloadFolder, filename);
-            return newPath;
+            return Path.Combine(downloadFolder, GetFileName(url));
         }
 
         public static void PrepareEnvironment(Settings settings)
@@ -65,9 +63,8 @@ namespace Automato.Helpers
                 if (!FileExists(settings.SettingsFileLocation))
                 {
                     File.CreateText(settings.SettingsFileLocation);
-                    File.WriteAllText(settings.SettingsFileLocation,
-                        JsonHelper.Serialize(
-                            GetFileContent(settings.SettingsFileLocation)));
+                    var content = GetFileContent(settings.SettingsFileLocation);
+                    File.WriteAllText(settings.SettingsFileLocation, JsonHelper.Serialize(content));
                 }
 
                 if (!Directory.Exists(settings.DownloadLocation)) Directory.CreateDirectory(settings.DownloadLocation);
