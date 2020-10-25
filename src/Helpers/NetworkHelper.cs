@@ -76,7 +76,7 @@ namespace Automato.Helpers
         private static void HandleDownloadProgress(object sender, DownloadProgressChangedEventArgs args)
         {
             var percentage = Math.Round(args.BytesReceived / (float) args.TotalBytesToReceive * 100);
-            MessagesHelper.DisplayMessageSameLine(Messages.DownloadProgress(percentage));
+            MessagesHelper.DisplayDynamicMessage(Messages.DownloadProgress(percentage));
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Automato.Entities;
+using Automato.Models;
 using Automato.ValueObjects;
 
 namespace Automato.Helpers
@@ -46,7 +46,7 @@ namespace Automato.Helpers
             }
             catch (Exception)
             {
-                PrepareEnvironment(new Settings(false));
+                PrepareEnvironment(new Settings());
                 return false;
             }
         }

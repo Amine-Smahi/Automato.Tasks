@@ -4,7 +4,7 @@ namespace Automato.Helpers
 {
     public static class MessagesHelper
     {
-        public static void DisplayMessageSameLine(string message)
+        public static void DisplayDynamicMessage(string message)
         {
             Console.Write(message);
         }

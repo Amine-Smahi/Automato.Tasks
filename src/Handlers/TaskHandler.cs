@@ -1,17 +1,18 @@
 using System.Linq;
-using Automato.Entities;
 using Automato.Enums;
 using Automato.Helpers;
+using Automato.Models;
 using Automato.ValueObjects;
 
 namespace Automato.Handlers
 {
     public static class TaskHandler
     {
-        private static readonly Settings Settings = new Settings(true);
+        private static readonly Settings Settings = new Settings();
 
         public static void ExecuteTasks()
         {
+            Settings.LoadSettings();
             var tasks = IoHelper.ReadAllLines(Settings.TasksLocation).ToList();
             if (tasks.Count <= 0) return;
             MessagesHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
