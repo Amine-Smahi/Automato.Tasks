@@ -1,7 +1,7 @@
-﻿using Automato.Handlers;
-using Automato.Helpers;
+﻿using Automato.Tasks.Handlers;
+using Automato.Tasks.Helpers;
 
-namespace Automato
+namespace Automato.Tasks
 {
     internal static class Program
     {

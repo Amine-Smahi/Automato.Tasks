@@ -6,6 +6,10 @@
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <PackageId>Automato.Cli</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Amine Smahi</Authors>
+    <Company>Self employed</Company>
   </PropertyGroup>
 
   <ItemGroup>

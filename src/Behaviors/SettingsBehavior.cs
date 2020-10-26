@@ -1,9 +1,9 @@
 using System;
-using Automato.Helpers;
-using Automato.Models;
-using Automato.ValueObjects;
+using Automato.Tasks.Helpers;
+using Automato.Tasks.Models;
+using Automato.Tasks.ValueObjects;
 
-namespace Automato.Behaviors
+namespace Automato.Tasks.Behaviors
 {
     public class SettingsBehavior
     {

@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Automato.Helpers
+namespace Automato.Tasks.Helpers
 {
     public static class JsonHelper
     {

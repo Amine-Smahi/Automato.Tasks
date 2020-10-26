@@ -1,10 +1,10 @@
 using System.Linq;
-using Automato.Enums;
-using Automato.Helpers;
-using Automato.Models;
-using Automato.ValueObjects;
+using Automato.Tasks.Enums;
+using Automato.Tasks.Helpers;
+using Automato.Tasks.Models;
+using Automato.Tasks.ValueObjects;
 
-namespace Automato.Handlers
+namespace Automato.Tasks.Handlers
 {
     public static class TaskHandler
     {

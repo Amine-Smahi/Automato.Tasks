@@ -1,6 +1,6 @@
-using Automato.Behaviors;
+using Automato.Tasks.Behaviors;
 
-namespace Automato.Models
+namespace Automato.Tasks.Models
 {
     public class Settings
     {

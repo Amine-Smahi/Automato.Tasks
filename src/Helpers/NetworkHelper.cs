@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel;
 using System.Net;
-using Automato.ValueObjects;
+using Automato.Tasks.ValueObjects;
 
-namespace Automato.Helpers
+namespace Automato.Tasks.Helpers
 {
     public static class NetworkHelper
     {

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Automato.ValueObjects;
+using Automato.Tasks.ValueObjects;
 
-namespace Automato.Helpers
+namespace Automato.Tasks.Helpers
 {
     public static class SystemHelper
     {

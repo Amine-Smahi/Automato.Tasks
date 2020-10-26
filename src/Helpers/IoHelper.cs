@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Automato.Helpers
+namespace Automato.Tasks.Helpers
 {
     public static class IoHelper
     {

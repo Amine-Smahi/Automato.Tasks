@@ -1,4 +1,4 @@
-namespace Automato.ValueObjects
+namespace Automato.Tasks.ValueObjects
 {
     public static class Messages
     {
@@ -43,7 +43,7 @@ namespace Automato.ValueObjects
 
         public static string TaskNotRecognized(string type)
         {
-            return $"Task type {type} is not supported, visit https://github.com/Amine-Smahi/Automato for more info";
+            return $"Task type {type} is not supported, visit https://github.com/Amine-Smahi/Automato.Tasks for more info";
         }
 
         public static string DownloadProgress(double percentage)

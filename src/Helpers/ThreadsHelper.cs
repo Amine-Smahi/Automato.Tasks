@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Threading;
 
-namespace Automato.Helpers
+namespace Automato.Tasks.Helpers
 {
     public static class ThreadsHelper
     {
