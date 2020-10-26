@@ -54,7 +54,8 @@
        user$ automato tasks
   - To open the <b>downloads</b> folder, run
 
-       user$ automato downloads
+        user$ automato downloads
 
 #### Note
-Feel free to open an issue,request a feature or contribute by opening a PR.
+* Feel free to open an issue,request a feature or contribute by opening a PR.
+* This project is under MIT license
