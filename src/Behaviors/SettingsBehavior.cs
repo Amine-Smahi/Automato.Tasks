@@ -28,6 +28,10 @@ namespace Automato.Tasks.Behaviors
                     MessagesHelper.DisplayMessage(Messages.Preparing);
                     PrepareEnvironment(new Settings());
                 }
+                else if (!CommandsHelper.ShouldExecuteTasks())
+                {
+                    MessagesHelper.DisplayMessage(Messages.Ready);
+                }
                 else
                 {
                     MessagesHelper.DisplayMessage(Messages.ErrorInSettings);

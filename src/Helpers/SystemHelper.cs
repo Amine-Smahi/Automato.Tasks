@@ -42,9 +42,7 @@ namespace Automato.Tasks.Helpers
 
         private static void MakeItSleepIfTrue(IReadOnlyList<string> args)
         {
-            if (args.Count <= 0) return;
-            if (args[0] != "true") return;
-
+            if (!CommandsHelper.ShouldSleep()) return;
             if (IsLinux())
                 ExecuteCommandForLinux("systemctl suspend");
             else if (IsWindows())
@@ -111,6 +109,26 @@ namespace Automato.Tasks.Helpers
                 }
             };
             StartProcessWithResult(process);
+        }
+
+        public static void OpenFile(string filePath)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = filePath,
+                UseShellExecute = true,
+                Verb = "open"
+            });
+        }
+
+        public static void OpenDirectory(string directoryPath)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = directoryPath,
+                UseShellExecute = true,
+                Verb = "open"
+            });
         }
     }
 }

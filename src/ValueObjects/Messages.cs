@@ -2,11 +2,13 @@ namespace Automato.Tasks.ValueObjects
 {
     public static class Messages
     {
-        public const string Finish = "Finished!";
+        public const string Finish = "Done!";
+        public const string Ready = "Ready!";
         public const string Preparing = "Preparing...";
         public const string StartAgain = "Starting again...";
         public const string ExecutingTask = "\nExecuting command...";
         public const string StartsDownloading = "\nStarts Downloading...";
+        public const string CommandNotRecognized = "Command arguments not valid";
         public const string OsNotDetected = "Your operating system is not supported";
         public const string NoInternet = "No internet connection, Make sure you are connected to a wifi";
 
@@ -15,7 +17,6 @@ namespace Automato.Tasks.ValueObjects
 
         public const string ErrorInitiatingConfiguration = "Error when initiating the configuration, " +
                                                            "Make sure you have the permission to create files in this location";
-
         public static string WaitForBetterInternet(double speed)
         {
             return $"\x000DWaiting for a better internet connexion speed........({speed} Kb/s)";
@@ -43,7 +44,8 @@ namespace Automato.Tasks.ValueObjects
 
         public static string TaskNotRecognized(string type)
         {
-            return $"Task type {type} is not supported, visit https://github.com/Amine-Smahi/Automato.Tasks for more info";
+            return
+                $"Task type {type} is not supported, visit https://github.com/Amine-Smahi/Automato.Tasks for more info";
         }
 
         public static string DownloadProgress(double percentage)

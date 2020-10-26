@@ -9,11 +9,11 @@ namespace Automato.Tasks.Helpers
     {
         private static readonly WebClient WebClient = new WebClient();
 
-        public static bool DownloadFile(string url, string downloadFolder)
+        public static bool DownloadFile(string url, string downloadDirectory)
         {
             try
             {
-                var filePath = IoHelper.CreatePath(url, downloadFolder);
+                var filePath = IoHelper.CreatePath(url, downloadDirectory);
                 WebClient.DownloadProgressChanged += HandleDownloadProgress;
                 WebClient.DownloadFileCompleted += HandleDownloadComplete;
                 var syncObject = new object();

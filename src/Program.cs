@@ -7,6 +7,7 @@ namespace Automato.Tasks
     {
         private static void Main(string[] args)
         {
+            CommandsHelper.AnalyseCommandArgs(args);
             TaskHandler.ExecuteTasks();
             SystemHelper.Finish(args);
         }

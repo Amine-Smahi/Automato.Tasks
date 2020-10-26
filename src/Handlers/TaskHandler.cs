@@ -12,10 +12,29 @@ namespace Automato.Tasks.Handlers
 
         public static void ExecuteTasks()
         {
-            var tasks = IoHelper.ReadAllLines(Settings.TasksLocation).ToList();
-            if (tasks.Count <= 0) return;
-            MessagesHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
-            foreach (var task in tasks) ProcessTask(task);
+            if (CommandsHelper.ShouldOpenSettings())
+            {
+                SystemHelper.OpenFile(Settings.SettingsFileLocation);
+            }
+            else if (CommandsHelper.ShouldOpenTasks())
+            {
+                SystemHelper.OpenFile(Settings.TasksLocation);
+            }
+            else if (CommandsHelper.ShouldOpenDownloadsDirectory())
+            {
+                SystemHelper.OpenDirectory(Settings.DownloadLocation);
+            }
+            else if (CommandsHelper.ShouldExecuteTasks())
+            {
+                var tasks = IoHelper.ReadAllLines(Settings.TasksLocation).ToList();
+                if (tasks.Count <= 0) return;
+                MessagesHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
+                foreach (var task in tasks) ProcessTask(task);
+            }
+            else
+            {
+                MessagesHelper.DisplayMessage(Messages.CommandNotRecognized);
+            }
         }
 
         private static void ProcessTask(string task)

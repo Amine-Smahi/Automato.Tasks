@@ -33,9 +33,9 @@ namespace Automato.Tasks.Helpers
             File.WriteAllLines(path, linksList.ToArray());
         }
 
-        public static string CreatePath(string url, string downloadFolder)
+        public static string CreatePath(string url, string downloadDirectory)
         {
-            return Path.Combine(downloadFolder, GetFileName(url));
+            return Path.Combine(downloadDirectory, GetFileName(url));
         }
 
         public static void WriteAllText(string fileLocation, string content)
@@ -56,6 +56,11 @@ namespace Automato.Tasks.Helpers
         public static void CreateDirectory(string directoryPath)
         {
             Directory.CreateDirectory(directoryPath);
+        }
+
+        public static string GetFullPath(string fileOrFolderPath)
+        {
+            return Path.GetFullPath(fileOrFolderPath);
         }
     }
 }
