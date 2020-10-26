@@ -5,7 +5,17 @@
 <h5 align="center">The easiest tool to automate 🤖 tasks while you are sleeping 😴</h5>
 <br/>
 
+#### Challenges
+* In the country where i live, you get durring the day an averrage internet speed of (40 kbps).
+* The internet quality starts to get better at 2am.
+* We need to plan the tasks that require a decent connexion at that time.
+* Obviously, not everyone can stay that late.
+#### Solution
+Create a tool that waits for the internet speed to get better(the minimum can be set from the settings) and start executing our tasks
+- Download files 
+- Execute commands
 
+While we are sleeping.
 #### Requirements 
 * .NET Core 3.1
 #### Installation
@@ -19,7 +29,7 @@
        user$ automato
        user$ Preparing...
              Finished!
-2) Now simply fill up the tasks that you wish to execute while automato wait for a good internet connection to start downloading and executing tasks, To update your tasks run the following command
+2) To update your tasks run the following command
 
        user$  automato tasks
       Here is an exemple of some todos
