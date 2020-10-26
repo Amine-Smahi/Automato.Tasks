@@ -19,7 +19,10 @@
        user$ automato
        user$ Preparing...
              Finished!
-2) A file named <b>MyTasks.txt</b> will be created, Now simply fill up the tasks that you wish to execute while automato wait for a good internet connection to start downloading and executing tasks, Here is an exemple of some todos
+2) Now simply fill up the tasks that you wish to execute while automato wait for a good internet connection to start downloading and executing tasks by executing
+
+       user$  automato tasks
+      Here is an exemple of some todos
       
        cmd => sudo apt-get update
        download => https://github.com/Amine-Smahi/Blood-Donation/archive/master.zip
@@ -49,10 +52,7 @@
 - To open the <b>settings.json</b> file, run
 
        user$ automato settings
- - To open the <b>MyTasks.txt</b> file, run
-
-       user$ automato tasks
-  - To open the <b>downloads</b> folder, run
+- To open the <b>downloads</b> folder, run
 
         user$ automato downloads
 
