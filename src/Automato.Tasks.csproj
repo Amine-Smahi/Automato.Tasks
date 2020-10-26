@@ -3,13 +3,19 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
-    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
-    <PackageId>Automato.Cli</PackageId>
+    <PackageId>Automato.Tasks</PackageId>
+    <Title>Automato.Tasks</Title>
+    <Description>The easiest tool to automate 🤖 tasks while you are sleeping 😴</Description>
+    <Summary>The easiest tool to automate 🤖 tasks while you are sleeping 😴</Summary>
     <Version>1.0.0</Version>
     <Authors>Amine Smahi</Authors>
-    <Company>Self employed</Company>
+    <PackageIconUrl>https://user-images.githubusercontent.com/24621701/97157893-035f7000-1779-11eb-8c0a-218c994e1258.jpg</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/Amine-Smahi/Automato.Tasks</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Amine-Smahi/Automato.Tasks</RepositoryUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Amine-Smahi/Automato.Tasks/main/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <ToolCommandName>automato</ToolCommandName>
+    <PackAsTool>True</PackAsTool>
   </PropertyGroup>
 
   <ItemGroup>

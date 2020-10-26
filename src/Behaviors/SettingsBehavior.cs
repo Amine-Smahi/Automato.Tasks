@@ -53,8 +53,7 @@ namespace Automato.Tasks.Behaviors
                 if (!IoHelper.FileExists(settings.SettingsFileLocation))
                 {
                     IoHelper.OpenOrCreateFile(settings.SettingsFileLocation);
-                    var content = IoHelper.GetFileContent(settings.SettingsFileLocation);
-                    IoHelper.WriteAllText(settings.SettingsFileLocation, JsonHelper.Serialize(content));
+                    IoHelper.WriteAllText(settings.SettingsFileLocation, JsonHelper.Serialize(settings));
                 }
 
                 if (!IoHelper.DirectoryExists(settings.DownloadLocation))
