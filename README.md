@@ -27,13 +27,15 @@
        cmd => cd master
        cmd => dotnet build
 
-3) launch automato by executing
+3) Launch automato by executing
 
        user$ automato
-4) if you wish that your computer go to sleep after finishing all the tasks
+4) If you wish that your computer go to sleep after finishing all the tasks
 
        user$ automato true
-5) All automato settings are easy to configure, simply open the <b>settings.json</b> file
+
+#### Features
+- All automato settings are easy to configure, simply edit the <b>settings.json</b> file
 
             {
               "SettingsFileLocation": "./settings.json",
@@ -44,6 +46,15 @@
               "TaskTypeSplitter": "=\u003E",
               "WaitFewSecondsForAnotherTry": 2000
             }
+- To open the <b>settings.json</b> file, run
+
+       user$ automato settings
+ - To open the <b>MyTasks.txt</b> file, run
+
+       user$ automato tasks
+  - To open the <b>downloads</b> folder, run
+
+       user$ automato downloads
 
 #### Note
 Feel free to open an issue,request a feature or contribute by opening a PR.
