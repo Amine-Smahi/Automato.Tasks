@@ -17,6 +17,7 @@ namespace Automato.Tasks.ValueObjects
 
         public const string ErrorInitiatingConfiguration = "Error when initiating the configuration, " +
                                                            "Make sure you have the permission to create files in this location";
+
         public static string WaitForBetterInternet(double speed)
         {
             return $"\x000DWaiting for a better internet connexion speed........({speed} Kb/s)";
