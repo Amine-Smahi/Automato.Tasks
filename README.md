@@ -19,7 +19,7 @@
        user$ automato
        user$ Preparing...
              Finished!
-2) Now simply fill up the tasks that you wish to execute while automato wait for a good internet connection to start downloading and executing tasks by executing
+2) Now simply fill up the tasks that you wish to execute while automato wait for a good internet connection to start downloading and executing tasks, To update your tasks run the following command
 
        user$  automato tasks
       Here is an exemple of some todos
