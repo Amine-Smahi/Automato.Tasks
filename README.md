@@ -12,3 +12,27 @@
 * Open the terminal and run the command below
   
       user$ dotnet tool install --global Automato.Tasks
+      
+#### Get started
+1) after the installation run the following command to create the appropiare environement
+
+       user$ automato
+       user$ Preparing...
+             Finished!
+2) A file named MyTasks.txt will be created, Now simply fill up the tasks that you wish to execute while automato wait for a good internet connection to start downloading and executing tasks, Here is an exemple of some todos
+      
+       cmd => sudo apt-get update
+       download => https://github.com/Amine-Smahi/Blood-Donation/archive/master.zip
+       cmd => unzip master.zip
+       cmd => cd master
+       cmd => dotnet build
+
+3) launch automato by executing
+
+       user$ automato
+4) if you wish that your computer go to sleep after finishing all the tasks
+
+       user$ automato true
+
+#### Note
+Feel free to open an issue,request a feature or contribute by opening a PR.
