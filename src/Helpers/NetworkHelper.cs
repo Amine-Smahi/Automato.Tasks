@@ -13,7 +13,7 @@ namespace Automato.Tasks.Helpers
         {
             try
             {
-                var filePath = IoHelper.CreatePath(url, downloadDirectory);
+                var filePath = PathsHelper.CreatePath(url, downloadDirectory);
                 WebClient.DownloadProgressChanged += HandleDownloadProgress;
                 WebClient.DownloadFileCompleted += HandleDownloadComplete;
                 var syncObject = new object();

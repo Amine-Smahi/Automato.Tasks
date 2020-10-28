@@ -26,7 +26,7 @@ namespace Automato.Tasks.Handlers
             }
             else if (CommandsHelper.ShouldExecuteTasks())
             {
-                var tasks = IoHelper.ReadAllLines(Settings.TasksLocation).ToList();
+                var tasks = FilesHelper.ReadAllLines(Settings.TasksLocation).ToList();
                 if (tasks.Count <= 0) return;
                 MessagesHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
                 foreach (var task in tasks) ProcessTask(task);
@@ -55,7 +55,7 @@ namespace Automato.Tasks.Handlers
                 {
                     MessagesHelper.DisplayMessage(Messages.ExecutingTask);
                     SystemHelper.ExecuteCommand(GetValueFromTask(task, 1));
-                    IoHelper.RemoveFirstLineFromTextFile(Settings.TasksLocation);
+                    FilesHelper.RemoveFirstLineFromTextFile(Settings.TasksLocation);
                 }
                 else
                 {
@@ -77,12 +77,12 @@ namespace Automato.Tasks.Handlers
             var doesSucceed = NetworkHelper.DownloadFile(url, Settings.DownloadLocation);
             if (doesSucceed)
             {
-                MessagesHelper.DisplayMessage(Messages.SuccessfulDownload(IoHelper.GetFileName(url)));
-                IoHelper.RemoveFirstLineFromTextFile(Settings.TasksLocation);
+                MessagesHelper.DisplayMessage(Messages.SuccessfulDownload(PathsHelper.GetFileNameFromPath(url)));
+                FilesHelper.RemoveFirstLineFromTextFile(Settings.TasksLocation);
             }
             else
             {
-                MessagesHelper.DisplayMessage(Messages.FailedDownload(IoHelper.GetFileName(url)));
+                MessagesHelper.DisplayMessage(Messages.FailedDownload(PathsHelper.GetFileNameFromPath(url)));
                 MessagesHelper.DisplayMessage(Messages.StartAgain);
                 return true;
             }

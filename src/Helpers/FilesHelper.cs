@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Automato.Tasks.Helpers
 {
-    public static class IoHelper
+    public static class FilesHelper
     {
         public static string GetFileContent(string settingsFileLocation)
         {
@@ -14,11 +14,6 @@ namespace Automato.Tasks.Helpers
         public static IEnumerable<string> ReadAllLines(string file)
         {
             return File.ReadAllLines(file);
-        }
-
-        public static string GetFileName(string path)
-        {
-            return Path.GetFileName(path);
         }
 
         public static bool FileExists(string filePath)
@@ -33,11 +28,6 @@ namespace Automato.Tasks.Helpers
             File.WriteAllLines(path, linksList.ToArray());
         }
 
-        public static string CreatePath(string url, string downloadDirectory)
-        {
-            return Path.Combine(downloadDirectory, GetFileName(url));
-        }
-
         public static void WriteAllText(string fileLocation, string content)
         {
             File.WriteAllText(fileLocation, content);
@@ -46,21 +36,6 @@ namespace Automato.Tasks.Helpers
         public static void OpenOrCreateFile(string filePath)
         {
             File.CreateText(filePath);
-        }
-
-        public static bool DirectoryExists(string directoryPath)
-        {
-            return Directory.Exists(directoryPath);
-        }
-
-        public static void CreateDirectory(string directoryPath)
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
-
-        public static string GetFullPath(string fileOrFolderPath)
-        {
-            return Path.GetFullPath(fileOrFolderPath);
         }
     }
 }

@@ -19,11 +19,12 @@ namespace Automato.Tasks.Behaviors
             if (!load) return;
             try
             {
-                SetSettings(JsonHelper.Deserialize<Settings>(_settings.SettingsFileLocation));
+                SetSettings(
+                    JsonHelper.Deserialize<Settings>(FilesHelper.GetFileContent(_settings.SettingsFileLocation)));
             }
             catch (Exception)
             {
-                if (!IoHelper.FileExists(_settings.SettingsFileLocation))
+                if (!FilesHelper.FileExists(_settings.SettingsFileLocation))
                 {
                     MessagesHelper.DisplayMessage(Messages.Preparing);
                     PrepareEnvironment(new Settings());
@@ -53,15 +54,16 @@ namespace Automato.Tasks.Behaviors
         {
             try
             {
-                if (!IoHelper.FileExists(settings.TasksLocation)) IoHelper.OpenOrCreateFile(settings.TasksLocation);
-                if (!IoHelper.FileExists(settings.SettingsFileLocation))
+                if (!FilesHelper.FileExists(settings.TasksLocation))
+                    FilesHelper.OpenOrCreateFile(settings.TasksLocation);
+                if (!FilesHelper.FileExists(settings.SettingsFileLocation))
                 {
-                    IoHelper.OpenOrCreateFile(settings.SettingsFileLocation);
-                    IoHelper.WriteAllText(settings.SettingsFileLocation, JsonHelper.Serialize(settings));
+                    FilesHelper.OpenOrCreateFile(settings.SettingsFileLocation);
+                    FilesHelper.WriteAllText(settings.SettingsFileLocation, JsonHelper.Serialize(settings));
                 }
 
-                if (!IoHelper.DirectoryExists(settings.DownloadLocation))
-                    IoHelper.CreateDirectory(settings.DownloadLocation);
+                if (!DirectoriesHelper.DirectoryExists(settings.DownloadLocation))
+                    DirectoriesHelper.CreateDirectory(settings.DownloadLocation);
             }
             catch
             {
