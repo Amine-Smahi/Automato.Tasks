@@ -24,11 +24,9 @@ While we are sleeping.
       user$ dotnet tool install --global Automato.Tasks
       
 #### Get started
-1) After the installation run the following command to create the appropiare environement
+1) After the installation run the following command to create the appropriate environment
 
        user$ automato
-       user$ Preparing...
-             Finished!
 2) To update your tasks run the following command
 
        user$ automato tasks
@@ -45,7 +43,7 @@ While we are sleeping.
        user$ automato
 4) If you wish that your computer go to sleep after finishing all the tasks
 
-       user$ automato true
+       user$ automato sleep
 
 #### Features
 - All automato settings are easy to configure, simply edit the <b>settings.json</b> file
