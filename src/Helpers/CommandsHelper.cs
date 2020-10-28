@@ -14,7 +14,7 @@ namespace Automato.Tasks.Helpers
 
         public static bool ShouldSleep()
         {
-            return CommandArgs.Any(x => x == true.ToString());
+            return CommandArgs.Any(x => x.ToLower() == "sleep");
         }
 
         public static bool ShouldExecuteTasks()
@@ -24,17 +24,17 @@ namespace Automato.Tasks.Helpers
 
         public static bool ShouldOpenSettings()
         {
-            return CommandArgs.Any(x => x == "settings");
+            return CommandArgs.Any(x => x.ToLower() == "settings");
         }
 
         public static bool ShouldOpenTasks()
         {
-            return CommandArgs.Any(x => x == "tasks");
+            return CommandArgs.Any(x => x.ToLower() == "tasks");
         }
 
         public static bool ShouldOpenDownloadsDirectory()
         {
-            return CommandArgs.Any(x => x == "downloads");
+            return CommandArgs.Any(x => x.ToLower() == "downloads");
         }
     }
 }
