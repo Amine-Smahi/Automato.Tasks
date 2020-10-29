@@ -6,7 +6,7 @@ using Automato.Tasks.Models;
 
 namespace Automato.Tasks.Handlers
 {
-    public static class TaskHandler
+    public static class TasksHandler
     {
         private static readonly Settings Settings = new Settings {LoadingSettings = true};
 
