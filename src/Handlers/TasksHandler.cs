@@ -21,24 +21,24 @@ namespace Automato.Tasks.Handlers
 
         public void ExecuteTasks()
         {
-            var tasks = new List<Task>();
+            var executedTasks = new List<Task>();
             if (CommandsHelper.ShouldOpenSettings()) SystemsHelper.OpenFile(_settings.SettingsFileLocation);
             if (CommandsHelper.ShouldOpenTasks()) SystemsHelper.OpenFile(_settings.TasksLocation);
             if (CommandsHelper.ShouldOpenDownloadsDirectory()) SystemsHelper.OpenDirectory(_settings.DownloadLocation);
             if (CommandsHelper.ShouldExecuteTasks())
             {
-                var tasksStrings = FilesHelper.ReadAllLines(_settings.TasksLocation).ToList();
+                var tasks = FilesHelper.ReadAllLines(_settings.TasksLocation).ToList();
                 if (tasks.Count <= 0) return;
                 NotificationsHelper.DisplayMessage(Messages.Welcome(tasks.Count, _settings.TasksLocation));
-                foreach (var taskString in tasksStrings)
+                foreach (var taskString in tasks)
                 {
                     var task = new Task();
                     task.ParseTask(taskString, _settings.TaskTypeSplitter);
                     ProcessTask(task);
-                    tasks.Add(task);
+                    executedTasks.Add(task);
                 }
 
-                UpdateTasksStatusInUserTasksList(tasks);
+                UpdateExecutedTasksStatusInUserTasksList(executedTasks);
             }
             else
             {
@@ -46,7 +46,7 @@ namespace Automato.Tasks.Handlers
             }
         }
 
-        public void UpdateTasksStatusInUserTasksList(IEnumerable<Task> tasks)
+        public void UpdateExecutedTasksStatusInUserTasksList(IEnumerable<Task> tasks)
         {
             FilesHelper.RemoveFileContent(_settings.TasksLocation);
             foreach (var task in tasks)

@@ -6,6 +6,6 @@ namespace Automato.Tasks.Interfaces
     public interface ITasksHandler
     {
         void ExecuteTasks();
-        void UpdateTasksStatusInUserTasksList(IEnumerable<Task> tasks);
+        void UpdateExecutedTasksStatusInUserTasksList(IEnumerable<Task> tasks);
     }
 }
