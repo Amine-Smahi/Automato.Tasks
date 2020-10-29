@@ -2,24 +2,25 @@ using System.Linq;
 using Automato.Tasks.Constants;
 using Automato.Tasks.Enums;
 using Automato.Tasks.Helpers;
+using Automato.Tasks.Interfaces;
 using Automato.Tasks.Models;
 
 namespace Automato.Tasks.Handlers
 {
-    public static class TasksHandler
+    public class TasksHandler : ITasksHandler
     {
-        private static readonly Settings Settings = new Settings {LoadingSettings = true};
+        private readonly Settings _settings = new Settings {LoadingSettings = true};
 
-        public static void ExecuteTasks()
+        public void ExecuteTasks()
         {
-            if (CommandsHelper.ShouldOpenSettings()) SystemsHelper.OpenFile(Settings.SettingsFileLocation);
-            if (CommandsHelper.ShouldOpenTasks()) SystemsHelper.OpenFile(Settings.TasksLocation);
-            if (CommandsHelper.ShouldOpenDownloadsDirectory()) SystemsHelper.OpenDirectory(Settings.DownloadLocation);
+            if (CommandsHelper.ShouldOpenSettings()) SystemsHelper.OpenFile(_settings.SettingsFileLocation);
+            if (CommandsHelper.ShouldOpenTasks()) SystemsHelper.OpenFile(_settings.TasksLocation);
+            if (CommandsHelper.ShouldOpenDownloadsDirectory()) SystemsHelper.OpenDirectory(_settings.DownloadLocation);
             if (CommandsHelper.ShouldExecuteTasks())
             {
-                var tasks = FilesHelper.ReadAllLines(Settings.TasksLocation).ToList();
+                var tasks = FilesHelper.ReadAllLines(_settings.TasksLocation).ToList();
                 if (tasks.Count <= 0) return;
-                NotificationsHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
+                NotificationsHelper.DisplayMessage(Messages.Welcome(tasks.Count, _settings.TasksLocation));
                 foreach (var task in tasks) ProcessTask(task);
             }
             else
@@ -28,13 +29,13 @@ namespace Automato.Tasks.Handlers
             }
         }
 
-        private static void ProcessTask(string task)
+        private void ProcessTask(string task)
         {
             while (true)
             {
-                NetworkHelper.WaitForDecentInternetConnection(Settings.MinimumInternetSpeed,
-                    Settings.MinimumGoodPings,
-                    Settings.MinimumGoodPings, Settings.WaitFewSecondsForAnotherTry);
+                NetworkHelper.WaitForDecentInternetConnection(_settings.MinimumInternetSpeed,
+                    _settings.MinimumGoodPings,
+                    _settings.MinimumGoodPings, _settings.WaitFewSecondsForAnotherTry);
 
                 if (GetValueFromTask(task, 0).ToLower().Contains(TaskType.Download.ToString().ToLower()))
                 {
@@ -46,7 +47,7 @@ namespace Automato.Tasks.Handlers
                 {
                     NotificationsHelper.DisplayMessage(Messages.ExecutingTask);
                     SystemsHelper.ExecuteCommand(GetValueFromTask(task, 1));
-                    FilesHelper.RemoveFirstLineFromTextFile(Settings.TasksLocation);
+                    FilesHelper.RemoveFirstLineFromTextFile(_settings.TasksLocation);
                 }
                 else
                 {
@@ -57,19 +58,19 @@ namespace Automato.Tasks.Handlers
             }
         }
 
-        private static string GetValueFromTask(string task, int index)
+        private string GetValueFromTask(string task, int index)
         {
-            var attributes = task.Split(Settings.TaskTypeSplitter);
+            var attributes = task.Split(_settings.TaskTypeSplitter);
             return attributes[index];
         }
 
-        private static bool DownloadFileHandler(string url)
+        private bool DownloadFileHandler(string url)
         {
-            var doesSucceed = NetworkHelper.DownloadFile(url, Settings.DownloadLocation);
+            var doesSucceed = NetworkHelper.DownloadFile(url, _settings.DownloadLocation);
             if (doesSucceed)
             {
                 NotificationsHelper.DisplayMessage(Messages.SuccessfulDownload(PathsHelper.GetFileNameFromPath(url)));
-                FilesHelper.RemoveFirstLineFromTextFile(Settings.TasksLocation);
+                FilesHelper.RemoveFirstLineFromTextFile(_settings.TasksLocation);
             }
             else
             {
