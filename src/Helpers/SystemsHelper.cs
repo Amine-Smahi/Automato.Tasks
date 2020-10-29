@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Automato.Tasks.Constants;
@@ -22,10 +21,10 @@ namespace Automato.Tasks.Helpers
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
         }
 
-        public static void Finish(IReadOnlyList<string> args)
+        public static void Finish()
         {
             NotificationsHelper.DisplayMessage(Messages.Finish);
-            MakeItSleepIfTrue(args);
+            MakeItSleepIfTrue();
         }
 
         public static void ExecuteCommand(string command)
@@ -40,7 +39,7 @@ namespace Automato.Tasks.Helpers
                 NotificationsHelper.DisplayMessage(Messages.OsNotDetected);
         }
 
-        private static void MakeItSleepIfTrue(IReadOnlyList<string> args)
+        private static void MakeItSleepIfTrue()
         {
             if (!CommandsHelper.ShouldSleep()) return;
             if (IsLinux())

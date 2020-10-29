@@ -12,7 +12,7 @@ namespace Automato.Tasks
             var tasksHandler = DependencyInjectionHelper.InjectDependency<ITasksHandler>();
             CommandsHelper.AnalyseCommandArgs(args);
             tasksHandler.ExecuteTasks();
-            SystemsHelper.Finish(args);
+            SystemsHelper.Finish();
         }
 
         private static void RegisterServices()
