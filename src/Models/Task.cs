@@ -42,5 +42,10 @@ namespace Automato.Tasks.Models
             if (type == TaskStatus.NotDone.ToString()) return TaskStatus.NotDone;
             return TaskStatus.HasErrors;
         }
+
+        public string Stringify(string separator)
+        {
+            return TaskType + separator + Value + separator + TaskStatus;
+        }
     }
 }

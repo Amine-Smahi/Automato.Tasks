@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -28,6 +29,16 @@ namespace Automato.Tasks.Helpers
         public static void OpenOrCreateFile(string filePath)
         {
             File.CreateText(filePath);
+        }
+
+        public static void RemoveFileContent(string filePath)
+        {
+            File.WriteAllText(filePath, string.Empty);
+        }
+
+        public static void AddLineToFile(string filePath, string line)
+        {
+            File.WriteAllText(filePath, line + Environment.NewLine);
         }
     }
 }

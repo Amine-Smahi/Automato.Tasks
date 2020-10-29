@@ -21,12 +21,6 @@ namespace Automato.Tasks.Helpers
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
         }
 
-        public static void Finish()
-        {
-            NotificationsHelper.DisplayMessage(Messages.Finish);
-            MakeItSleepIfTrue();
-        }
-
         public static void ExecuteCommand(string command)
         {
             if (IsLinux())
@@ -39,7 +33,7 @@ namespace Automato.Tasks.Helpers
                 NotificationsHelper.DisplayMessage(Messages.OsNotDetected);
         }
 
-        private static void MakeItSleepIfTrue()
+        public static void Sleep()
         {
             if (!CommandsHelper.ShouldSleep()) return;
             if (IsLinux())

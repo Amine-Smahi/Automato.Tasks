@@ -1,4 +1,5 @@
-﻿using Automato.Tasks.Handlers;
+﻿using Automato.Tasks.Constants;
+using Automato.Tasks.Handlers;
 using Automato.Tasks.Helpers;
 using Automato.Tasks.Interfaces;
 
@@ -12,7 +13,8 @@ namespace Automato.Tasks
             var tasksHandler = DependencyInjectionHelper.InjectDependency<ITasksHandler>();
             CommandsHelper.AnalyseCommandArgs(args);
             tasksHandler.ExecuteTasks();
-            SystemsHelper.Finish();
+            NotificationsHelper.DisplayMessage(Messages.Finish);
+            SystemsHelper.Sleep();
         }
 
         private static void RegisterServices()

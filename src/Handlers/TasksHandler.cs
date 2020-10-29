@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Automato.Tasks.Constants;
 using Automato.Tasks.Enums;
@@ -20,25 +21,36 @@ namespace Automato.Tasks.Handlers
 
         public void ExecuteTasks()
         {
+            var tasks = new List<Task>();
             if (CommandsHelper.ShouldOpenSettings()) SystemsHelper.OpenFile(_settings.SettingsFileLocation);
             if (CommandsHelper.ShouldOpenTasks()) SystemsHelper.OpenFile(_settings.TasksLocation);
             if (CommandsHelper.ShouldOpenDownloadsDirectory()) SystemsHelper.OpenDirectory(_settings.DownloadLocation);
             if (CommandsHelper.ShouldExecuteTasks())
             {
-                var tasks = FilesHelper.ReadAllLines(_settings.TasksLocation).ToList();
+                var tasksStrings = FilesHelper.ReadAllLines(_settings.TasksLocation).ToList();
                 if (tasks.Count <= 0) return;
                 NotificationsHelper.DisplayMessage(Messages.Welcome(tasks.Count, _settings.TasksLocation));
-                foreach (var taskString in tasks)
+                foreach (var taskString in tasksStrings)
                 {
                     var task = new Task();
                     task.ParseTask(taskString, _settings.TaskTypeSplitter);
                     ProcessTask(task);
+                    tasks.Add(task);
                 }
+
+                UpdateTasksStatusInUserTasksList(tasks);
             }
             else
             {
                 NotificationsHelper.DisplayMessage(Messages.CommandNotRecognized);
             }
+        }
+
+        public void UpdateTasksStatusInUserTasksList(IEnumerable<Task> tasks)
+        {
+            FilesHelper.RemoveFileContent(_settings.TasksLocation);
+            foreach (var task in tasks)
+                FilesHelper.AddLineToFile(_settings.TasksLocation, task.Stringify(_settings.TaskTypeSplitter));
         }
 
         private void ProcessTask(Task task)
