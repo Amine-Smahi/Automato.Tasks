@@ -12,18 +12,9 @@ namespace Automato.Tasks.Handlers
 
         public static void ExecuteTasks()
         {
-            if (CommandsHelper.ShouldOpenSettings())
-            {
-                SystemsHelper.OpenFile(Settings.SettingsFileLocation);
-            }
-            if (CommandsHelper.ShouldOpenTasks())
-            {
-                SystemsHelper.OpenFile(Settings.TasksLocation);
-            }
-            if (CommandsHelper.ShouldOpenDownloadsDirectory())
-            {
-                SystemsHelper.OpenDirectory(Settings.DownloadLocation);
-            }
+            if (CommandsHelper.ShouldOpenSettings()) SystemsHelper.OpenFile(Settings.SettingsFileLocation);
+            if (CommandsHelper.ShouldOpenTasks()) SystemsHelper.OpenFile(Settings.TasksLocation);
+            if (CommandsHelper.ShouldOpenDownloadsDirectory()) SystemsHelper.OpenDirectory(Settings.DownloadLocation);
             if (CommandsHelper.ShouldExecuteTasks())
             {
                 var tasks = FilesHelper.ReadAllLines(Settings.TasksLocation).ToList();

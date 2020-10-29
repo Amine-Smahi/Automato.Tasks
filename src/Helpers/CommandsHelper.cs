@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Automato.Tasks.ValueObjects;
 
 namespace Automato.Tasks.Helpers
 {
@@ -14,7 +15,7 @@ namespace Automato.Tasks.Helpers
 
         public static bool ShouldSleep()
         {
-            return CommandArgs.Any(x => x.ToLower() == "sleep");
+            return CommandArgs.Any(x => x.ToLower() == Commands.Sleep);
         }
 
         public static bool ShouldExecuteTasks()
@@ -24,17 +25,17 @@ namespace Automato.Tasks.Helpers
 
         public static bool ShouldOpenSettings()
         {
-            return CommandArgs.Any(x => x.ToLower() == "settings");
+            return CommandArgs.Any(x => x.ToLower() == Commands.Settings);
         }
 
         public static bool ShouldOpenTasks()
         {
-            return CommandArgs.Any(x => x.ToLower() == "tasks");
+            return CommandArgs.Any(x => x.ToLower() == Commands.Tasks);
         }
 
         public static bool ShouldOpenDownloadsDirectory()
         {
-            return CommandArgs.Any(x => x.ToLower() == "downloads");
+            return CommandArgs.Any(x => x.ToLower() == Commands.Downloads);
         }
     }
 }
