@@ -9,12 +9,13 @@ namespace Automato.Tasks.Handlers
 {
     public class TasksHandler : ITasksHandler
     {
-        private readonly DownloadFileTaskHandler _downloadFileTaskHandler;
+        private readonly IDownloadFileTaskHandler _downloadFileTaskHandler;
         public readonly Settings Settings = new Settings {LoadingSettings = true};
 
         public TasksHandler()
         {
             _downloadFileTaskHandler = new DownloadFileTaskHandler(this);
+            _downloadFileTaskHandler = DependencyInjectionHelper.InjectDependency<IDownloadFileTaskHandler>();
         }
 
         public void ExecuteTasks()
@@ -53,7 +54,7 @@ namespace Automato.Tasks.Handlers
                     case TaskType.Download:
                     {
                         NotificationsHelper.DisplayMessage(Messages.StartsDownloading);
-                        if (_downloadFileTaskHandler.DownloadFile(task.Value)) task.IsDone = true;
+                        if (_downloadFileTaskHandler.DownloadFileAndReturnStatus(task.Value)) task.IsDone = true;
                         break;
                     }
                     case TaskType.Cmd:

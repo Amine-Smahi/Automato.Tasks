@@ -1,9 +1,10 @@
 using Automato.Tasks.Constants;
 using Automato.Tasks.Helpers;
+using Automato.Tasks.Interfaces;
 
 namespace Automato.Tasks.Handlers
 {
-    public class DownloadFileTaskHandler
+    public class DownloadFileTaskHandler : IDownloadFileTaskHandler
     {
         private readonly TasksHandler _tasksHandler;
 
@@ -12,7 +13,7 @@ namespace Automato.Tasks.Handlers
             _tasksHandler = tasksHandler;
         }
 
-        public bool DownloadFile(string url)
+        public bool DownloadFileAndReturnStatus(string url)
         {
             var doesSucceed = NetworkHelper.DownloadFile(url, _tasksHandler.Settings.DownloadLocation);
             if (doesSucceed)
