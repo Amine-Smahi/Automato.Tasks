@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Net;
-using Automato.Tasks.ValueObjects;
+using Automato.Tasks.Constants;
 
 namespace Automato.Tasks.Helpers
 {

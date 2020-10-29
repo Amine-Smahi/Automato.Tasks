@@ -1,7 +1,7 @@
 using System;
+using Automato.Tasks.Constants;
 using Automato.Tasks.Helpers;
 using Automato.Tasks.Models;
-using Automato.Tasks.ValueObjects;
 
 namespace Automato.Tasks.Behaviors
 {

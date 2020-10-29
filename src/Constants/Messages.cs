@@ -1,4 +1,4 @@
-namespace Automato.Tasks.ValueObjects
+namespace Automato.Tasks.Constants
 {
     public static class Messages
     {

@@ -1,8 +1,8 @@
 using System.Linq;
+using Automato.Tasks.Constants;
 using Automato.Tasks.Enums;
 using Automato.Tasks.Helpers;
 using Automato.Tasks.Models;
-using Automato.Tasks.ValueObjects;
 
 namespace Automato.Tasks.Handlers
 {

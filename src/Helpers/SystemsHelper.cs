@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Automato.Tasks.ValueObjects;
+using Automato.Tasks.Constants;
 
 namespace Automato.Tasks.Helpers
 {
