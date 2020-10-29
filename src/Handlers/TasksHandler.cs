@@ -9,22 +9,28 @@ namespace Automato.Tasks.Handlers
 {
     public class TasksHandler : ITasksHandler
     {
-        private readonly Settings _settings = new Settings {LoadingSettings = true};
+        private readonly DownloadFileTaskHandler _downloadFileTaskHandler;
+        public readonly Settings Settings = new Settings {LoadingSettings = true};
+
+        public TasksHandler()
+        {
+            _downloadFileTaskHandler = new DownloadFileTaskHandler(this);
+        }
 
         public void ExecuteTasks()
         {
-            if (CommandsHelper.ShouldOpenSettings()) SystemsHelper.OpenFile(_settings.SettingsFileLocation);
-            if (CommandsHelper.ShouldOpenTasks()) SystemsHelper.OpenFile(_settings.TasksLocation);
-            if (CommandsHelper.ShouldOpenDownloadsDirectory()) SystemsHelper.OpenDirectory(_settings.DownloadLocation);
+            if (CommandsHelper.ShouldOpenSettings()) SystemsHelper.OpenFile(Settings.SettingsFileLocation);
+            if (CommandsHelper.ShouldOpenTasks()) SystemsHelper.OpenFile(Settings.TasksLocation);
+            if (CommandsHelper.ShouldOpenDownloadsDirectory()) SystemsHelper.OpenDirectory(Settings.DownloadLocation);
             if (CommandsHelper.ShouldExecuteTasks())
             {
-                var tasks = FilesHelper.ReadAllLines(_settings.TasksLocation).ToList();
+                var tasks = FilesHelper.ReadAllLines(Settings.TasksLocation).ToList();
                 if (tasks.Count <= 0) return;
-                NotificationsHelper.DisplayMessage(Messages.Welcome(tasks.Count, _settings.TasksLocation));
+                NotificationsHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
                 foreach (var taskString in tasks)
                 {
                     var task = new Task();
-                    task.ParseTask(taskString, _settings.TaskTypeSplitter);
+                    task.ParseTask(taskString, Settings.TaskTypeSplitter);
                     ProcessTask(task);
                 }
             }
@@ -38,16 +44,16 @@ namespace Automato.Tasks.Handlers
         {
             while (!task.IsDone && !task.IsExecuted)
             {
-                NetworkHelper.WaitForDecentInternetConnection(_settings.MinimumInternetSpeed,
-                    _settings.MinimumGoodPings,
-                    _settings.MinimumGoodPings, _settings.WaitFewSecondsForAnotherTry);
+                NetworkHelper.WaitForDecentInternetConnection(Settings.MinimumInternetSpeed,
+                    Settings.MinimumGoodPings,
+                    Settings.MinimumGoodPings, Settings.WaitFewSecondsForAnotherTry);
 
                 switch (task.TaskType)
                 {
                     case TaskType.Download:
                     {
                         NotificationsHelper.DisplayMessage(Messages.StartsDownloading);
-                        if (DownloadFileHandler(task.Value)) task.IsDone = true;
+                        if (_downloadFileTaskHandler.DownloadFile(task.Value)) task.IsDone = true;
                         break;
                     }
                     case TaskType.Cmd:
@@ -65,24 +71,6 @@ namespace Automato.Tasks.Handlers
                         break;
                 }
             }
-        }
-
-        private bool DownloadFileHandler(string url)
-        {
-            var doesSucceed = NetworkHelper.DownloadFile(url, _settings.DownloadLocation);
-            if (doesSucceed)
-            {
-                NotificationsHelper.DisplayMessage(Messages.SuccessfulDownload(PathsHelper.GetFileNameFromPath(url)));
-                FilesHelper.RemoveFirstLineFromTextFile(_settings.TasksLocation);
-            }
-            else
-            {
-                NotificationsHelper.DisplayMessage(Messages.FailedDownload(PathsHelper.GetFileNameFromPath(url)));
-                NotificationsHelper.DisplayMessage(Messages.StartAgain);
-                return true;
-            }
-
-            return false;
         }
     }
 }
