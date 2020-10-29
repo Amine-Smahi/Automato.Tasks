@@ -26,16 +26,16 @@ namespace Automato.Tasks.Behaviors
             {
                 if (!FilesHelper.FileExists(_settings.SettingsFileLocation))
                 {
-                    MessagesHelper.DisplayMessage(Messages.Preparing);
+                    NotificationsHelper.DisplayMessage(Messages.Preparing);
                     PrepareEnvironment(new Settings());
                 }
                 else if (!CommandsHelper.ShouldExecuteTasks())
                 {
-                    MessagesHelper.DisplayMessage(Messages.Ready);
+                    NotificationsHelper.DisplayMessage(Messages.Ready);
                 }
                 else
                 {
-                    MessagesHelper.DisplayMessage(Messages.ErrorInSettings);
+                    NotificationsHelper.DisplayMessage(Messages.ErrorInSettings);
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace Automato.Tasks.Behaviors
             }
             catch
             {
-                MessagesHelper.DisplayMessage(Messages.ErrorInitiatingConfiguration);
+                NotificationsHelper.DisplayMessage(Messages.ErrorInitiatingConfiguration);
             }
         }
     }

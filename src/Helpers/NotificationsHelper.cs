@@ -2,7 +2,7 @@ using System;
 
 namespace Automato.Tasks.Helpers
 {
-    public static class MessagesHelper
+    public static class NotificationsHelper
     {
         public static void DisplayDynamicMessage(string message)
         {

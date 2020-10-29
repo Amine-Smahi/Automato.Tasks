@@ -5,7 +5,7 @@ using Automato.Tasks.ValueObjects;
 
 namespace Automato.Tasks.Helpers
 {
-    public static class SystemHelper
+    public static class SystemsHelper
     {
         private static bool IsWindows()
         {
@@ -24,7 +24,7 @@ namespace Automato.Tasks.Helpers
 
         public static void Finish(IReadOnlyList<string> args)
         {
-            MessagesHelper.DisplayMessage(Messages.Finish);
+            NotificationsHelper.DisplayMessage(Messages.Finish);
             MakeItSleepIfTrue(args);
         }
 
@@ -37,7 +37,7 @@ namespace Automato.Tasks.Helpers
             else if (IsMac())
                 ExecuteCommandForMac("");
             else
-                MessagesHelper.DisplayMessage(Messages.OsNotDetected);
+                NotificationsHelper.DisplayMessage(Messages.OsNotDetected);
         }
 
         private static void MakeItSleepIfTrue(IReadOnlyList<string> args)
@@ -50,7 +50,7 @@ namespace Automato.Tasks.Helpers
             else if (IsMac())
                 ExecuteCommandForMac("");
             else
-                MessagesHelper.DisplayMessage(Messages.OsNotDetected);
+                NotificationsHelper.DisplayMessage(Messages.OsNotDetected);
         }
 
         private static void StartProcessWithResult(Process process)
@@ -60,7 +60,7 @@ namespace Automato.Tasks.Helpers
             result += process.StandardOutput.ReadToEnd();
             result += process.StandardError.ReadToEnd();
             process.WaitForExit();
-            MessagesHelper.DisplayMessage(Messages.DisplayProcessExecutionResult(result));
+            NotificationsHelper.DisplayMessage(Messages.DisplayProcessExecutionResult(result));
         }
 
         private static void ExecuteCommandForMac(string command)

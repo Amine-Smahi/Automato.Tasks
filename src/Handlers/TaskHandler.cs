@@ -14,26 +14,26 @@ namespace Automato.Tasks.Handlers
         {
             if (CommandsHelper.ShouldOpenSettings())
             {
-                SystemHelper.OpenFile(Settings.SettingsFileLocation);
+                SystemsHelper.OpenFile(Settings.SettingsFileLocation);
             }
-            else if (CommandsHelper.ShouldOpenTasks())
+            if (CommandsHelper.ShouldOpenTasks())
             {
-                SystemHelper.OpenFile(Settings.TasksLocation);
+                SystemsHelper.OpenFile(Settings.TasksLocation);
             }
-            else if (CommandsHelper.ShouldOpenDownloadsDirectory())
+            if (CommandsHelper.ShouldOpenDownloadsDirectory())
             {
-                SystemHelper.OpenDirectory(Settings.DownloadLocation);
+                SystemsHelper.OpenDirectory(Settings.DownloadLocation);
             }
-            else if (CommandsHelper.ShouldExecuteTasks())
+            if (CommandsHelper.ShouldExecuteTasks())
             {
                 var tasks = FilesHelper.ReadAllLines(Settings.TasksLocation).ToList();
                 if (tasks.Count <= 0) return;
-                MessagesHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
+                NotificationsHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
                 foreach (var task in tasks) ProcessTask(task);
             }
             else
             {
-                MessagesHelper.DisplayMessage(Messages.CommandNotRecognized);
+                NotificationsHelper.DisplayMessage(Messages.CommandNotRecognized);
             }
         }
 
@@ -47,19 +47,19 @@ namespace Automato.Tasks.Handlers
 
                 if (GetValueFromTask(task, 0).ToLower().Contains(TaskType.Download.ToString().ToLower()))
                 {
-                    MessagesHelper.DisplayMessage(Messages.StartsDownloading);
+                    NotificationsHelper.DisplayMessage(Messages.StartsDownloading);
                     if (DownloadFileHandler(GetValueFromTask(task, 1)))
                         continue;
                 }
                 else if (GetValueFromTask(task, 0).ToLower().Contains(TaskType.Cmd.ToString().ToLower()))
                 {
-                    MessagesHelper.DisplayMessage(Messages.ExecutingTask);
-                    SystemHelper.ExecuteCommand(GetValueFromTask(task, 1));
+                    NotificationsHelper.DisplayMessage(Messages.ExecutingTask);
+                    SystemsHelper.ExecuteCommand(GetValueFromTask(task, 1));
                     FilesHelper.RemoveFirstLineFromTextFile(Settings.TasksLocation);
                 }
                 else
                 {
-                    MessagesHelper.DisplayMessage(Messages.TaskNotRecognized(GetValueFromTask(task, 0)));
+                    NotificationsHelper.DisplayMessage(Messages.TaskNotRecognized(GetValueFromTask(task, 0)));
                 }
 
                 break;
@@ -77,13 +77,13 @@ namespace Automato.Tasks.Handlers
             var doesSucceed = NetworkHelper.DownloadFile(url, Settings.DownloadLocation);
             if (doesSucceed)
             {
-                MessagesHelper.DisplayMessage(Messages.SuccessfulDownload(PathsHelper.GetFileNameFromPath(url)));
+                NotificationsHelper.DisplayMessage(Messages.SuccessfulDownload(PathsHelper.GetFileNameFromPath(url)));
                 FilesHelper.RemoveFirstLineFromTextFile(Settings.TasksLocation);
             }
             else
             {
-                MessagesHelper.DisplayMessage(Messages.FailedDownload(PathsHelper.GetFileNameFromPath(url)));
-                MessagesHelper.DisplayMessage(Messages.StartAgain);
+                NotificationsHelper.DisplayMessage(Messages.FailedDownload(PathsHelper.GetFileNameFromPath(url)));
+                NotificationsHelper.DisplayMessage(Messages.StartAgain);
                 return true;
             }
 

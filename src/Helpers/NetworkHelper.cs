@@ -43,7 +43,7 @@ namespace Automato.Tasks.Helpers
             }
             catch
             {
-                MessagesHelper.DisplayMessage(Messages.NoInternet);
+                NotificationsHelper.DisplayMessage(Messages.NoInternet);
                 return 0d;
             }
         }
@@ -61,7 +61,7 @@ namespace Automato.Tasks.Helpers
                         myConnectionSpeed = CheckInternetSpeed();
                         if (!(myConnectionSpeed < minimumInternetSpeed)) continue;
                         goodPings = minimumGoodPings;
-                        MessagesHelper.DisplayDynamicMessage(Messages.WaitForBetterInternet(myConnectionSpeed));
+                        NotificationsHelper.DisplayDynamicMessage(Messages.WaitForBetterInternet(myConnectionSpeed));
                         ThreadsHelper.Sleep(waitingTime);
                     } while (myConnectionSpeed < minimumInternetSpeed);
 
@@ -81,7 +81,7 @@ namespace Automato.Tasks.Helpers
         private static void HandleDownloadProgress(object sender, DownloadProgressChangedEventArgs eventArgs)
         {
             var percentage = Math.Round(eventArgs.BytesReceived / (float) eventArgs.TotalBytesToReceive * 100);
-            MessagesHelper.DisplayDynamicMessage(Messages.DownloadProgress(percentage));
+            NotificationsHelper.DisplayDynamicMessage(Messages.DownloadProgress(percentage));
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Automato.Tasks
         {
             CommandsHelper.AnalyseCommandArgs(args);
             TaskHandler.ExecuteTasks();
-            SystemHelper.Finish(args);
+            SystemsHelper.Finish(args);
         }
     }
 }
