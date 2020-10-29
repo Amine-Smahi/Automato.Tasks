@@ -6,20 +6,12 @@ namespace Automato.Tasks.Handlers
 {
     public class DownloadFileTaskHandler : IDownloadFileTaskHandler
     {
-        private readonly TasksHandler _tasksHandler;
-
-        public DownloadFileTaskHandler(TasksHandler tasksHandler)
+        public bool DownloadFileAndReturnStatus(string url, string downloadLocation)
         {
-            _tasksHandler = tasksHandler;
-        }
-
-        public bool DownloadFileAndReturnStatus(string url)
-        {
-            var doesSucceed = NetworkHelper.DownloadFile(url, _tasksHandler.Settings.DownloadLocation);
+            var doesSucceed = NetworkHelper.DownloadFile(url, downloadLocation);
             if (doesSucceed)
             {
                 NotificationsHelper.DisplayMessage(Messages.SuccessfulDownload(PathsHelper.GetFileNameFromPath(url)));
-                FilesHelper.RemoveFirstLineFromTextFile(_tasksHandler.Settings.TasksLocation);
             }
             else
             {

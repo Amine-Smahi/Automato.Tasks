@@ -10,28 +10,28 @@ namespace Automato.Tasks.Handlers
     public class TasksHandler : ITasksHandler
     {
         private readonly IDownloadFileTaskHandler _downloadFileTaskHandler;
-        public readonly Settings Settings = new Settings {LoadingSettings = true};
+        private readonly Settings _settings = new Settings {LoadingSettings = true};
 
         public TasksHandler()
         {
-            _downloadFileTaskHandler = new DownloadFileTaskHandler(this);
+            _downloadFileTaskHandler = new DownloadFileTaskHandler();
             _downloadFileTaskHandler = DependencyInjectionHelper.InjectDependency<IDownloadFileTaskHandler>();
         }
 
         public void ExecuteTasks()
         {
-            if (CommandsHelper.ShouldOpenSettings()) SystemsHelper.OpenFile(Settings.SettingsFileLocation);
-            if (CommandsHelper.ShouldOpenTasks()) SystemsHelper.OpenFile(Settings.TasksLocation);
-            if (CommandsHelper.ShouldOpenDownloadsDirectory()) SystemsHelper.OpenDirectory(Settings.DownloadLocation);
+            if (CommandsHelper.ShouldOpenSettings()) SystemsHelper.OpenFile(_settings.SettingsFileLocation);
+            if (CommandsHelper.ShouldOpenTasks()) SystemsHelper.OpenFile(_settings.TasksLocation);
+            if (CommandsHelper.ShouldOpenDownloadsDirectory()) SystemsHelper.OpenDirectory(_settings.DownloadLocation);
             if (CommandsHelper.ShouldExecuteTasks())
             {
-                var tasks = FilesHelper.ReadAllLines(Settings.TasksLocation).ToList();
+                var tasks = FilesHelper.ReadAllLines(_settings.TasksLocation).ToList();
                 if (tasks.Count <= 0) return;
-                NotificationsHelper.DisplayMessage(Messages.Welcome(tasks.Count, Settings.TasksLocation));
+                NotificationsHelper.DisplayMessage(Messages.Welcome(tasks.Count, _settings.TasksLocation));
                 foreach (var taskString in tasks)
                 {
                     var task = new Task();
-                    task.ParseTask(taskString, Settings.TaskTypeSplitter);
+                    task.ParseTask(taskString, _settings.TaskTypeSplitter);
                     ProcessTask(task);
                 }
             }
@@ -43,32 +43,32 @@ namespace Automato.Tasks.Handlers
 
         private void ProcessTask(Task task)
         {
-            while (!task.IsDone && !task.IsExecuted)
+            while (task.TaskStatus == TaskStatus.NotDone)
             {
-                NetworkHelper.WaitForDecentInternetConnection(Settings.MinimumInternetSpeed,
-                    Settings.MinimumGoodPings,
-                    Settings.MinimumGoodPings, Settings.WaitFewSecondsForAnotherTry);
-
+                NetworkHelper.WaitForDecentInternetConnection(_settings.MinimumInternetSpeed,
+                    _settings.MinimumGoodPings,
+                    _settings.MinimumGoodPings, _settings.WaitFewSecondsForAnotherTry);
                 switch (task.TaskType)
                 {
                     case TaskType.Download:
                     {
                         NotificationsHelper.DisplayMessage(Messages.StartsDownloading);
-                        if (_downloadFileTaskHandler.DownloadFileAndReturnStatus(task.Value)) task.IsDone = true;
+                        if (_downloadFileTaskHandler.DownloadFileAndReturnStatus(task.Value, _settings.DownloadLocation)
+                        ) task.TaskStatus = TaskStatus.Done;
                         break;
                     }
                     case TaskType.Cmd:
                         NotificationsHelper.DisplayMessage(Messages.ExecutingTask);
                         SystemsHelper.ExecuteCommand(task.Value);
-                        task.IsDone = true;
+                        task.TaskStatus = TaskStatus.Done;
                         break;
                     case TaskType.NotSupported:
                         NotificationsHelper.DisplayMessage(Messages.TaskNotRecognized(task.Value));
-                        task.IsExecuted = true;
+                        task.TaskStatus = TaskStatus.HasErrors;
                         break;
                     default:
                         NotificationsHelper.DisplayMessage(Messages.NoTaskIdentified(task.Value));
-                        task.IsExecuted = true;
+                        task.TaskStatus = TaskStatus.HasErrors;
                         break;
                 }
             }

@@ -2,6 +2,6 @@ namespace Automato.Tasks.Interfaces
 {
     public interface IDownloadFileTaskHandler
     {
-        bool DownloadFileAndReturnStatus(string url);
+        public bool DownloadFileAndReturnStatus(string url, string downloadLocation);
     }
 }

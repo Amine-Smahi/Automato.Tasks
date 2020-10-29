@@ -8,7 +8,7 @@ namespace Automato.Tasks.Helpers
 
         public static void RegisterDependency<T, TU>()
         {
-            Collection.AddScoped(typeof(T), typeof(TU));
+            Collection.AddScoped(typeof(T), typeof(TU)).BuildServiceProvider();
         }
 
         public static T InjectDependency<T>()

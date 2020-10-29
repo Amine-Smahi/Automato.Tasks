@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Automato.Tasks.Helpers
 {
@@ -19,13 +18,6 @@ namespace Automato.Tasks.Helpers
         public static bool FileExists(string filePath)
         {
             return File.Exists(filePath);
-        }
-
-        public static void RemoveFirstLineFromTextFile(string path)
-        {
-            var linksList = File.ReadAllLines(path).ToList();
-            linksList.RemoveAt(0);
-            File.WriteAllLines(path, linksList.ToArray());
         }
 
         public static void WriteAllText(string fileLocation, string content)
