@@ -53,5 +53,10 @@ namespace Automato.Tasks.Constants
         {
             return "\x000DProgress => " + percentage + "%";
         }
+
+        public static string NoTaskIdentified(string taskValue)
+        {
+            return "Task separator '" + taskValue + "' not supported";
+        }
     }
 }

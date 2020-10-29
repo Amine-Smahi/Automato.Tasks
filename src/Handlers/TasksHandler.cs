@@ -21,7 +21,12 @@ namespace Automato.Tasks.Handlers
                 var tasks = FilesHelper.ReadAllLines(_settings.TasksLocation).ToList();
                 if (tasks.Count <= 0) return;
                 NotificationsHelper.DisplayMessage(Messages.Welcome(tasks.Count, _settings.TasksLocation));
-                foreach (var task in tasks) ProcessTask(task);
+                foreach (var taskString in tasks)
+                {
+                    var task = new Task();
+                    task.ParseTask(taskString, _settings.TaskTypeSplitter);
+                    ProcessTask(task);
+                }
             }
             else
             {
@@ -29,39 +34,37 @@ namespace Automato.Tasks.Handlers
             }
         }
 
-        private void ProcessTask(string task)
+        private void ProcessTask(Task task)
         {
-            while (true)
+            while (!task.IsDone && !task.IsExecuted)
             {
                 NetworkHelper.WaitForDecentInternetConnection(_settings.MinimumInternetSpeed,
                     _settings.MinimumGoodPings,
                     _settings.MinimumGoodPings, _settings.WaitFewSecondsForAnotherTry);
 
-                if (GetValueFromTask(task, 0).ToLower().Contains(TaskType.Download.ToString().ToLower()))
+                switch (task.TaskType)
                 {
-                    NotificationsHelper.DisplayMessage(Messages.StartsDownloading);
-                    if (DownloadFileHandler(GetValueFromTask(task, 1)))
-                        continue;
+                    case TaskType.Download:
+                    {
+                        NotificationsHelper.DisplayMessage(Messages.StartsDownloading);
+                        if (DownloadFileHandler(task.Value)) task.IsDone = true;
+                        break;
+                    }
+                    case TaskType.Cmd:
+                        NotificationsHelper.DisplayMessage(Messages.ExecutingTask);
+                        SystemsHelper.ExecuteCommand(task.Value);
+                        task.IsDone = true;
+                        break;
+                    case TaskType.NotSupported:
+                        NotificationsHelper.DisplayMessage(Messages.TaskNotRecognized(task.Value));
+                        task.IsExecuted = true;
+                        break;
+                    default:
+                        NotificationsHelper.DisplayMessage(Messages.NoTaskIdentified(task.Value));
+                        task.IsExecuted = true;
+                        break;
                 }
-                else if (GetValueFromTask(task, 0).ToLower().Contains(TaskType.Cmd.ToString().ToLower()))
-                {
-                    NotificationsHelper.DisplayMessage(Messages.ExecutingTask);
-                    SystemsHelper.ExecuteCommand(GetValueFromTask(task, 1));
-                    FilesHelper.RemoveFirstLineFromTextFile(_settings.TasksLocation);
-                }
-                else
-                {
-                    NotificationsHelper.DisplayMessage(Messages.TaskNotRecognized(GetValueFromTask(task, 0)));
-                }
-
-                break;
             }
-        }
-
-        private string GetValueFromTask(string task, int index)
-        {
-            var attributes = task.Split(_settings.TaskTypeSplitter);
-            return attributes[index];
         }
 
         private bool DownloadFileHandler(string url)
