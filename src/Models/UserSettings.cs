@@ -1,19 +1,20 @@
-using Automato.Tasks.Handlers;
+using Automato.Tasks.Helpers;
+using Automato.Tasks.Interfaces;
 
 namespace Automato.Tasks.Models
 {
     public class UserSettings
     {
-        private readonly UserSettingsHandler _userSettingsHandler;
+        private readonly IUserSettingsHandler _userSettingsHandler;
 
         public UserSettings()
         {
-            _userSettingsHandler = new UserSettingsHandler(this);
+            _userSettingsHandler = DependencyInjectionHelper.InjectDependency<IUserSettingsHandler>();
         }
 
         public bool LoadingSettings
         {
-            set => _userSettingsHandler.LoadSettings(value);
+            set => _userSettingsHandler.LoadSettings(this, value);
         }
 
         public string SettingsFileLocation { get; } = "./settings.json";

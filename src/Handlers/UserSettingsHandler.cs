@@ -1,31 +1,23 @@
 using System;
 using Automato.Tasks.Constants;
 using Automato.Tasks.Helpers;
+using Automato.Tasks.Interfaces;
 using Automato.Tasks.Models;
 
 namespace Automato.Tasks.Handlers
 {
-    public class UserSettingsHandler
+    public class UserSettingsHandler : IUserSettingsHandler
     {
-        private readonly UserSettings _userSettings;
-
-        public UserSettingsHandler(UserSettings userSettings)
-        {
-            _userSettings = userSettings;
-        }
-
-        public void LoadSettings(bool load)
+        public void LoadSettings(UserSettings userSettings, bool load)
         {
             if (!load) return;
             try
             {
-                SetSettings(
-                    JsonHelper.Deserialize<UserSettings>(
-                        FilesHelper.GetFileContent(_userSettings.SettingsFileLocation)));
+                userSettings = GetLocalUserSettings(userSettings);
             }
             catch (Exception)
             {
-                if (!FilesHelper.FileExists(_userSettings.SettingsFileLocation))
+                if (!FilesHelper.FileExists(userSettings.SettingsFileLocation))
                 {
                     NotificationsHelper.DisplayMessage(Messages.Preparing);
                     PrepareEnvironment(new UserSettings());
@@ -41,14 +33,20 @@ namespace Automato.Tasks.Handlers
             }
         }
 
-        private void SetSettings(UserSettings localUserSettings)
+        private static UserSettings GetLocalUserSettings(UserSettings userSettings)
         {
-            _userSettings.DownloadLocation = localUserSettings.DownloadLocation;
-            _userSettings.MinimumGoodPings = localUserSettings.MinimumGoodPings;
-            _userSettings.MinimumInternetSpeed = localUserSettings.MinimumInternetSpeed;
-            _userSettings.TasksLocation = localUserSettings.TasksLocation;
-            _userSettings.TaskTypeSplitter = localUserSettings.TaskTypeSplitter;
-            _userSettings.WaitFewSecondsForAnotherTry = localUserSettings.WaitFewSecondsForAnotherTry;
+            var localUserSettings = JsonHelper.Deserialize<UserSettings>(
+                FilesHelper.GetFileContent(userSettings.SettingsFileLocation));
+            userSettings = new UserSettings
+            {
+                DownloadLocation = localUserSettings.DownloadLocation,
+                MinimumGoodPings = localUserSettings.MinimumGoodPings,
+                MinimumInternetSpeed = localUserSettings.MinimumInternetSpeed,
+                TasksLocation = localUserSettings.TasksLocation,
+                TaskTypeSplitter = localUserSettings.TaskTypeSplitter,
+                WaitFewSecondsForAnotherTry = localUserSettings.WaitFewSecondsForAnotherTry
+            };
+            return userSettings;
         }
 
         private static void PrepareEnvironment(UserSettings userSettings)

@@ -19,6 +19,7 @@ namespace Automato.Tasks
 
         private static void RegisterServices()
         {
+            DependencyInjectionHelper.RegisterDependency<IUserSettingsHandler, UserSettingsHandler>();
             DependencyInjectionHelper.RegisterDependency<ITasksHandler, TasksHandler>();
             DependencyInjectionHelper.RegisterDependency<IDownloadFileTaskHandler, DownloadFileTaskHandler>();
         }
