@@ -18,6 +18,17 @@ Create a tool that waits for the internet speed to get better(the minimum can be
 While we are sleeping.
 #### Requirements 
 * .NET Core 3.1
+#### Technologies
+* C#
+* .NET Core
+#### Principles and patterns
+* Separation of concerns pattern
+* Don't repeat yourself principle
+* Single Responsibility Principle
+* Interface Segregation Principle
+* Dependency Inversion Principle
+
+#### 
 #### Installation
 * Open the terminal and run the command below
   
