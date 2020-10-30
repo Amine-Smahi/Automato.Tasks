@@ -40,5 +40,12 @@ namespace Automato.Tasks.Helpers
         {
             File.WriteAllText(filePath, line + Environment.NewLine);
         }
+
+        public static void UpdateLineInFile(string filePath, string newLine, int lineIndex)
+        {
+            var contentLines = File.ReadAllLines(filePath);
+            contentLines[lineIndex - 1] = newLine;
+            File.WriteAllLines(filePath, contentLines);
+        }
     }
 }

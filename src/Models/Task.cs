@@ -11,10 +11,9 @@ namespace Automato.Tasks.Models
 
         public TaskType TaskType { get; private set; }
         public string Value { get; private set; }
-
         public TaskStatus TaskStatus { get; set; }
 
-        public void ParseTask(string task, string taskTypeSplitter)
+        public void Parse(string task, string taskTypeSplitter)
         {
             TaskType = GetTaskType(task, taskTypeSplitter);
             Value = GeTaskValue(task, taskTypeSplitter);
